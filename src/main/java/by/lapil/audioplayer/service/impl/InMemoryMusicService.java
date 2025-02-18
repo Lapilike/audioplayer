@@ -3,6 +3,7 @@ package by.lapil.audioplayer.service.impl;
 import by.lapil.audioplayer.model.Music;
 import by.lapil.audioplayer.repository.InMemoryMusicDao;
 import by.lapil.audioplayer.service.MusicService;
+import by.lapil.audioplayer.service.NotFoundExeption;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,17 +15,30 @@ public class InMemoryMusicService implements MusicService {
 
     @Override
     public List<Music> findAll() {
-        return musicDao.findAll();
+        List<Music> music = musicDao.findAll();
+        if (music.isEmpty()) {
+            throw new NotFoundExeption("No music found");
+        }
+
+        return music;
     }
 
     @Override
     public Music findById(int id) {
-        return musicDao.findById(id);
+        Music music = musicDao.findById(id);
+        if (music == null) {
+            throw new NotFoundExeption("Music not found");
+        }
+        return music;
     }
 
     @Override
     public Music update(Music music) {
-        return musicDao.update(music);
+        Music tmpMusic = musicDao.update(music);
+        if (tmpMusic == null) {
+            throw new NotFoundExeption("Music not found");
+        }
+        return tmpMusic;
     }
 
     @Override
