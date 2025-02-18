@@ -12,30 +12,30 @@ import java.util.List;
 @AllArgsConstructor
 public class InMemoryMusicService implements MusicService {
 
-    InMemoryMusicDAO MusicDAO;
+    InMemoryMusicDAO MusicRepository;
 
     @Override
     public List<Music> findAll() {
-        return MusicDAO.findAll();
+        return MusicRepository.findAll();
     }
 
     @Override
     public Music findById(int id) {
-        return MusicDAO.findById(id);
+        return MusicRepository.findById(id);
     }
 
     @Override
     public Music update(Music music) {
-        return MusicDAO.update(music);
+        return MusicRepository.update(music);
     }
 
     @Override
     public Music save(Music music) {
-        return MusicDAO.save(music);
+        return MusicRepository.save(music);
     }
 
     @Override
     public void deleteById(int id) {
-        MusicDAO.deleteById(id);
+        MusicRepository.deleteById(id);
     }
 }
