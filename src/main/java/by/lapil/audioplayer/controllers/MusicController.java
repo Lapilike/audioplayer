@@ -24,6 +24,11 @@ public class MusicController {
         return musicService.findById(id);
     }
 
+    @GetMapping("/get")
+    public Music getByIdRequest(@RequestParam(required = false, defaultValue = "0") int id) {
+        return musicService.findById(id);
+    }
+
     @PostMapping("save_music")
     public Music saveMusic(@RequestBody Music music) {
         return musicService.save(music);
