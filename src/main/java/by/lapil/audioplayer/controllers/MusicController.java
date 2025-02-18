@@ -2,16 +2,14 @@ package by.lapil.audioplayer.controllers;
 
 import by.lapil.audioplayer.model.Music;
 import by.lapil.audioplayer.service.impl.InMemoryMusicService;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/music")
 @AllArgsConstructor
 public class MusicController {
-
     InMemoryMusicService musicService;
 
     @GetMapping

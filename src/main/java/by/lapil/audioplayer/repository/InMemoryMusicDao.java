@@ -1,14 +1,13 @@
 package by.lapil.audioplayer.repository;
 
 import by.lapil.audioplayer.model.Music;
-import org.springframework.stereotype.Repository;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
+import org.springframework.stereotype.Repository;
 
 @Repository
-public class InMemoryMusicDAO {
+public class InMemoryMusicDao {
     private final List<Music> musics = new ArrayList<>();
 
     public List<Music> findAll() {
@@ -25,7 +24,7 @@ public class InMemoryMusicDAO {
         int index = IntStream.range(0, musics.size())
                 .filter(i -> musics.get(i).getId() == music.getId())
                 .findFirst().orElse(-1);
-        if(index != -1) {
+        if (index != -1) {
             musics.set(index, music);
             return music;
         }
