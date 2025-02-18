@@ -22,11 +22,11 @@ public class InMemoryMusicDAO {
     }
 
     public Music update(Music music) {
-        int MusicIndex = IntStream.range(0, musics.size())
+        int index = IntStream.range(0, musics.size())
                 .filter(i -> musics.get(i).getId() == music.getId())
                 .findFirst().orElse(-1);
-        if(MusicIndex != -1) {
-            musics.set(MusicIndex, music);
+        if(index != -1) {
+            musics.set(index, music);
             return music;
         }
         return null;
