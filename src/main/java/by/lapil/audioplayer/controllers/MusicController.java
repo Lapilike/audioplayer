@@ -1,22 +1,41 @@
 package by.lapil.audioplayer.controllers;
 
 import by.lapil.audioplayer.model.Music;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import by.lapil.audioplayer.service.impl.InMemoryMusicService;
+import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/music")
+@AllArgsConstructor
 public class MusicController {
 
+    InMemoryMusicService musicService;
+
     @GetMapping
-    public List<Music> findAllMusic() {
-        return List.of(
-                Music.builder().name("Tenebre Rosso Sangue").artist("KEYGEN CHURCH").album("ULTRAKILL").id(0).build(),
-                Music.builder().name("Bury The Light").artist("Casey Edwards").album("Devil May Cry 5").id(1).build(),
-                Music.builder().name("The Rebel Path").artist("P.T. Adamczyk").album("Cyberpunk 2077").id(2).build()
-        );
+    public List<Music> getAll() {
+        return musicService.findAll();
+    }
+
+    @GetMapping("/get/{id}")
+    public Music getById(@PathVariable int id) {
+        return musicService.findById(id);
+    }
+
+    @PostMapping("save_music")
+    public Music saveMusic(@RequestBody Music music) {
+        return musicService.save(music);
+    }
+
+    @PutMapping("update_music")
+    public Music updateMusic(@RequestBody Music music) {
+        return musicService.update(music);
+    }
+
+    @DeleteMapping("delete_music/{id}")
+    public void deleteById(@PathVariable int id) {
+        musicService.deleteById(id);
     }
 }
