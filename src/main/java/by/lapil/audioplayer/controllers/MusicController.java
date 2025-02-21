@@ -20,17 +20,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class MusicController {
     InMemoryMusicService musicService;
 
-    @GetMapping
+    @GetMapping("all")
     public List<Music> getAll() {
         return musicService.findAll();
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("{id}")
     public Music getById(@PathVariable int id) {
         return musicService.findById(id);
     }
 
-    @GetMapping("/get")
+    @GetMapping
     public Music getByIdRequest(@RequestParam(required = false, defaultValue = "0") int id) {
         return musicService.findById(id);
     }
