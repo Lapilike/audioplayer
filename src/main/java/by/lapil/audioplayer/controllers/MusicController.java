@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MusicController {
     InMemoryMusicService musicService;
 
-    @GetMapping("all")
+    @GetMapping
     public List<Music> getAll() {
         return musicService.findAll();
     }
@@ -30,8 +30,8 @@ public class MusicController {
         return musicService.findById(id);
     }
 
-    @GetMapping
-    public Music getByIdRequest(@RequestParam(required = false, defaultValue = "0") int id) {
+    @GetMapping("filter")
+    public Music getByIdRequest(@RequestParam() int id) {
         return musicService.findById(id);
     }
 
