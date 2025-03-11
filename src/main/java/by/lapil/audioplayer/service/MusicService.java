@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 public interface MusicService {
     List<Music> findAll();
 
-    Music findById(int id);
+    Music findById(Long id);
 
     Music update(Music music);
 
     Music save(Music music);
 
-    void deleteById(int id);
+    void deleteById(Long id);
 }

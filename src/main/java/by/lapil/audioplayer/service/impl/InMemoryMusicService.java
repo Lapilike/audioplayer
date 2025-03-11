@@ -6,10 +6,12 @@ import by.lapil.audioplayer.service.MusicService;
 import by.lapil.audioplayer.service.NotFoundExeption;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
+@Primary
 public class InMemoryMusicService implements MusicService {
     InMemoryMusicDao musicDao;
 
@@ -24,7 +26,7 @@ public class InMemoryMusicService implements MusicService {
     }
 
     @Override
-    public Music findById(int id) {
+    public Music findById(Long id) {
         Music music = musicDao.findById(id);
         if (music == null) {
             throw new NotFoundExeption("Music not found");
@@ -47,7 +49,7 @@ public class InMemoryMusicService implements MusicService {
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(Long id) {
         musicDao.deleteById(id);
     }
 }

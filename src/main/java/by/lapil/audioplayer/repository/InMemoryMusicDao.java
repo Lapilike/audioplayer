@@ -14,7 +14,7 @@ public class InMemoryMusicDao {
         return musics;
     }
 
-    public Music findById(int id) {
+    public Music findById(Long id) {
         return musics.stream()
                 .filter(music -> music.getId() == id)
                 .findFirst().orElse(null);
@@ -36,7 +36,7 @@ public class InMemoryMusicDao {
         return music;
     }
 
-    public void deleteById(int id) {
+    public void deleteById(Long id) {
         musics.remove(findById(id));
     }
 }

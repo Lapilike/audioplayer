@@ -1,7 +1,7 @@
 package by.lapil.audioplayer.controllers;
 
 import by.lapil.audioplayer.model.Music;
-import by.lapil.audioplayer.service.impl.InMemoryMusicService;
+import by.lapil.audioplayer.service.MusicService;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/music")
 @AllArgsConstructor
 public class MusicController {
-    InMemoryMusicService musicService;
+    MusicService musicService;
 
     @GetMapping
     public List<Music> getAll() {
@@ -26,12 +26,12 @@ public class MusicController {
     }
 
     @GetMapping("{id}")
-    public Music getById(@PathVariable int id) {
+    public Music getById(@PathVariable Long id) {
         return musicService.findById(id);
     }
 
     @GetMapping("filter")
-    public Music getByIdRequest(@RequestParam() int id) {
+    public Music getByIdRequest(@RequestParam() Long id) {
         return musicService.findById(id);
     }
 
@@ -46,7 +46,7 @@ public class MusicController {
     }
 
     @DeleteMapping("delete_music/{id}")
-    public void deleteById(@PathVariable int id) {
+    public void deleteById(@PathVariable Long id) {
         musicService.deleteById(id);
     }
 }
