@@ -6,6 +6,7 @@ import by.lapil.audioplayer.model.entity.Artist;
 import by.lapil.audioplayer.service.ArtistService;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,5 +33,10 @@ public class ArtistController {
     @PostMapping
     public ArtistDto create(@RequestBody CreateArtistDto createArtistDto) {
         return artistService.create(createArtistDto);
+    }
+
+    @DeleteMapping
+    public void delete(@RequestParam Long id) {
+        artistService.deleteById(id);
     }
 }
