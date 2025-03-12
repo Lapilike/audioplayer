@@ -51,7 +51,9 @@ public class SongServiceImpl implements SongService {
     public List<SongDto> findByTitleAndGenre(String title, Genres genre) {
         List<Song> songs = songRepository.findByTitle(title);
         songRepository.findByTitle(title);
-        List<SongDto> songDtos = songs.stream().map(m -> new SongDto(m)).collect(Collectors.toList());
+        List<SongDto> songDtos = songs.stream()
+                .map(SongDto::new)
+                .collect(Collectors.toList());
         if (genre != null) {
             songDtos = songDtos.stream()
                     .filter(u -> u.getGenre().equals(genre))

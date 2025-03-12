@@ -41,12 +41,12 @@ public class SongController {
     }
 
     @PostMapping
-    public SongDto saveMusic(@RequestBody CreateSongDto musicDto) {
+    public SongDto save(@RequestBody CreateSongDto musicDto) {
         return songService.create(musicDto);
     }
 
     @PutMapping("/{id}")
-    public SongDto updateMusic(@PathVariable Long id, @RequestBody CreateSongDto createSongDto) {
+    public SongDto update(@PathVariable Long id, @RequestBody CreateSongDto createSongDto) {
         return songService.update(id, createSongDto);
     }
 
