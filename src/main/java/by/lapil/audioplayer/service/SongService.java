@@ -5,7 +5,6 @@ import by.lapil.audioplayer.model.dto.SongDto;
 import by.lapil.audioplayer.model.entity.Song;
 import by.lapil.audioplayer.utils.Genres;
 import java.util.List;
-import java.util.Set;
 import org.springframework.stereotype.Service;
 
 @Service
