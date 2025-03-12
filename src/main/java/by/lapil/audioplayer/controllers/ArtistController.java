@@ -29,7 +29,7 @@ public class ArtistController {
     }
 
     @GetMapping("{id}")
-    public Artist getById(@RequestParam Long id) {
+    public Artist getById(@PathVariable Long id) {
         return artistService.findById(id);
     }
 
