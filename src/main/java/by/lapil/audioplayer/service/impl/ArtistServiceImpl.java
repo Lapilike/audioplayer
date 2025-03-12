@@ -7,8 +7,8 @@ import by.lapil.audioplayer.model.entity.Artist;
 import by.lapil.audioplayer.model.entity.Song;
 import by.lapil.audioplayer.repository.ArtistRepository;
 import by.lapil.audioplayer.service.ArtistService;
-import by.lapil.audioplayer.service.NotFoundExeption;
 import by.lapil.audioplayer.service.SongService;
+import by.lapil.audioplayer.utils.NotFoundException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -34,7 +34,7 @@ public class ArtistServiceImpl implements ArtistService {
     @Override
     public ArtistDto update(Long id, UpdateArtistDto updateDto) {
         Artist artist = artistRepository.findById(id)
-                .orElseThrow(() -> new NotFoundExeption("Artist not found"));
+                .orElseThrow(() -> new NotFoundException("Artist not found"));
         if (updateDto.getArtistSongs() != null) {
             List<Song> songList = songService.findAllById(updateDto.getArtistSongs().stream().toList());
             artist.setSongs(new HashSet<>(songList));

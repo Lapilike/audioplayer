@@ -6,12 +6,12 @@ import by.lapil.audioplayer.model.entity.Artist;
 import by.lapil.audioplayer.model.entity.Song;
 import by.lapil.audioplayer.repository.SongRepository;
 import by.lapil.audioplayer.service.ArtistService;
-import by.lapil.audioplayer.service.NotFoundExeption;
 import by.lapil.audioplayer.service.SongService;
 import by.lapil.audioplayer.utils.Genres;
+import by.lapil.audioplayer.utils.IncorrectGenreException;
+import by.lapil.audioplayer.utils.NotFoundException;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -53,11 +53,11 @@ public class SongServiceImpl implements SongService {
         songRepository.findByTitle(title);
         List<SongDto> songDtos = songs.stream()
                 .map(SongDto::new)
-                .collect(Collectors.toList());
+                .toList();
         if (genre != null) {
             songDtos = songDtos.stream()
                     .filter(u -> u.getGenre().equals(genre))
-                    .collect(Collectors.toList());
+                    .toList();
         }
         return songDtos;
     }
@@ -65,7 +65,7 @@ public class SongServiceImpl implements SongService {
     @Override
     public SongDto update(Long id, CreateSongDto createSongDto) {
         Song song = songRepository.findById(id)
-                .orElseThrow(() -> new NotFoundExeption("Song not found"));
+                .orElseThrow(() -> new NotFoundException("Song not found"));
         if (createSongDto.getTitle() != null) {
             song.setTitle(createSongDto.getTitle());
         }
@@ -76,7 +76,7 @@ public class SongServiceImpl implements SongService {
             try {
                 song.setGenre(Genres.parseGenre(createSongDto.getGenre().toUpperCase()));
             } catch (IllegalArgumentException e) {
-                throw new RuntimeException("Некорректный жанр: " + createSongDto.getGenre());
+                throw new IncorrectGenreException("Incorrect genre: " + createSongDto.getGenre());
             }
         }
         return new SongDto(song);
