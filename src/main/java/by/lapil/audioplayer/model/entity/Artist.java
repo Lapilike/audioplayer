@@ -1,0 +1,52 @@
+package by.lapil.audioplayer.model.entity;
+
+import by.lapil.audioplayer.model.dto.CreateArtistDto;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import java.util.Set;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Table(name = "artist")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Artist {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column
+    private String artistName;
+
+    @OneToMany(
+            fetch = FetchType.LAZY,
+            mappedBy = "artist",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<Album> albums;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "artist_music",
+            joinColumns = @JoinColumn(name = "student_id"), // Внешний ключ для Student
+            inverseJoinColumns = @JoinColumn(name = "course_id")
+    )
+    private Set<Song> songs;
+
+    public Artist(CreateArtistDto createArtistDto) {
+        this.artistName = createArtistDto.getArtistName();
+    }
+}

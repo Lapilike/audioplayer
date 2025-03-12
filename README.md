@@ -6,9 +6,9 @@ Java spring boot web application
 
 ## Features
 
-- Ability to find music tracks
-- Ability to add your own music tracks
-- Ability to view information about music
+- Ability to find song tracks
+- Ability to add your own song tracks
+- Ability to view information about song
 - API
 
 
@@ -17,7 +17,7 @@ Java spring boot web application
 #### Get item
 
 ```http
-  GET /api/v1/music/get/{id}
+  GET /api/v1/song/get/{id}
 ```
 
 | Parameter | Type  | Description                       |
