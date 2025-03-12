@@ -61,11 +61,6 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
-    public Set<Song> findByTitles(Set<String> titles) {
-        return songRepository.findByTitles(titles);
-    }
-
-    @Override
     public SongDto update(Long id, CreateSongDto createSongDto) {
         Song song = songRepository.findById(id)
                 .orElseThrow(() -> new NotFoundExeption("Song not found"));
@@ -83,11 +78,6 @@ public class SongServiceImpl implements SongService {
             }
         }
         return new SongDto(song);
-    }
-
-    @Override
-    public Song save(Song song) {
-        return songRepository.save(song);
     }
 
     @Override
