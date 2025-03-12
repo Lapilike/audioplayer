@@ -20,8 +20,6 @@ public interface SongService {
 
     List<SongDto> findByTitleAndGenre(String name, Genres genre);
 
-    Set<Song> findByTitles(Set<String> titles);
-
     SongDto update(Long id, CreateSongDto createSongDto);
 
     void deleteById(Long id);
