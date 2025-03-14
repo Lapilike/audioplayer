@@ -7,15 +7,17 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.util.Set;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "music")
+@Table(name = "song")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,8 +29,12 @@ public class Song {
     @Column(nullable = false)
     private String title;
 
-    @ManyToMany(mappedBy = "artist")
-    private Set<Artist> artist;
+    @ManyToOne
+    @JoinColumn(name = "album_id")
+    private Album album;
+
+    @ManyToMany(mappedBy = "songs")
+    private List<Artist> artist;
 
     @Column(nullable = false)
     private Genres genre;

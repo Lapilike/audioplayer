@@ -4,11 +4,11 @@ import by.lapil.audioplayer.model.dto.CreateSongDto;
 import by.lapil.audioplayer.model.dto.SongDto;
 import by.lapil.audioplayer.model.entity.Song;
 import by.lapil.audioplayer.service.SongService;
-import by.lapil.audioplayer.utils.Genres;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -24,20 +24,20 @@ public class SongController {
     SongService songService;
 
     @GetMapping
-    public List<Song> getAll() {
-        return songService.findAll();
+    public List<SongDto> getAll() {
+        List<Song> songList = songService.findAll();
+        return songList.stream().map(SongDto::new).toList();
     }
 
-    @GetMapping("{id}")
-    public Song getById(@PathVariable Long id) {
-        return songService.findById(id);
+    @GetMapping("/{id}")
+    public SongDto getById(@PathVariable Long id) {
+        return new SongDto(songService.findById(id));
     }
 
     @GetMapping("/search")
     public List<SongDto> getByName(@RequestParam(required = false) String name,
                                    @RequestParam(required = false) String genre) {
-        Genres genreEnum = Genres.valueOf(genre);
-        return songService.findByTitleAndGenre(name, genreEnum);
+        return songService.findByTitleAndGenre(name, genre);
     }
 
     @PostMapping
@@ -50,7 +50,12 @@ public class SongController {
         return songService.update(id, createSongDto);
     }
 
-    @DeleteMapping("delete_music/{id}")
+    @PatchMapping("/{id}")
+    public SongDto patch(@PathVariable Long id, @RequestBody CreateSongDto createSongDto) {
+        return songService.patch(id, createSongDto);
+    }
+
+    @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id) {
         songService.deleteById(id);
     }

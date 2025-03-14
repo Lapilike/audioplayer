@@ -3,8 +3,7 @@ package by.lapil.audioplayer.model.dto;
 import by.lapil.audioplayer.model.entity.Artist;
 import by.lapil.audioplayer.model.entity.Song;
 import by.lapil.audioplayer.utils.Genres;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,15 +13,19 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SongDto {
     private String title;
-    private Set<String> artists;
+    private List<String> artists;
+    private String album;
     private Genres genre;
     private String filePath;
 
     public SongDto(Song song) {
-        title = song.getTitle();
-        Set<Artist> artistSet = song.getArtist();
-        artists = artistSet.stream().map(Artist::getArtistName).collect(Collectors.toSet());
-        genre = song.getGenre();
-        filePath = song.getFilePath();
+        this.title = song.getTitle();
+        List<Artist> artistSet = song.getArtist();
+        if (artistSet != null) {
+            this.artists = artistSet.stream().map(Artist::getName).toList();
+        }
+        this.album = song.getAlbum().getName();
+        this.genre = song.getGenre();
+        this.filePath = song.getFilePath();
     }
 }

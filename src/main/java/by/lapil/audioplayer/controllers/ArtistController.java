@@ -9,6 +9,7 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -24,13 +25,19 @@ public class ArtistController {
     ArtistService artistService;
 
     @GetMapping
-    public List<Artist> getAll() {
-        return artistService.findAll();
+    public List<ArtistDto> getAll() {
+        List<Artist> artistList = artistService.findAll();
+        return artistList.stream().map(ArtistDto::new).toList();
     }
 
-    @GetMapping("{id}")
-    public Artist getById(@PathVariable Long id) {
-        return artistService.findById(id);
+    @GetMapping("/{id}")
+    public ArtistDto getById(@PathVariable Long id) {
+        return new ArtistDto(artistService.findById(id));
+    }
+
+    @GetMapping("/search")
+    public List<ArtistDto> getById(@RequestParam() String name) {
+        return artistService.findByName(name);
     }
 
     @PostMapping
@@ -38,13 +45,18 @@ public class ArtistController {
         return artistService.create(createArtistDto);
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ArtistDto update(@PathVariable Long id, @RequestBody UpdateArtistDto updateArtistDto) {
         return artistService.update(id, updateArtistDto);
     }
 
-    @DeleteMapping
-    public void delete(@RequestParam Long id) {
+    @PatchMapping("/{id}")
+    public ArtistDto patch(@PathVariable Long id, @RequestBody UpdateArtistDto updateArtistDto) {
+        return artistService.patch(id, updateArtistDto);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
         artistService.deleteById(id);
     }
 }

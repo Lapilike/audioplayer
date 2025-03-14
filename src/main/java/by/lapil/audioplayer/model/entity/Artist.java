@@ -13,7 +13,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import java.util.Set;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,24 +29,23 @@ public class Artist {
     private Long id;
 
     @Column
-    private String artistName;
+    private String name;
 
     @OneToMany(
             fetch = FetchType.LAZY,
             mappedBy = "artist",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
-    private Set<Album> albums;
+            cascade = CascadeType.REMOVE)
+    private List<Album> albums;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "artist_music",
-            joinColumns = @JoinColumn(name = "student_id"), // Внешний ключ для Student
-            inverseJoinColumns = @JoinColumn(name = "course_id")
+            name = "artist_song_id",
+            joinColumns = @JoinColumn(name = "artist_id"),
+            inverseJoinColumns = @JoinColumn(name = "song_id")
     )
-    private Set<Song> songs;
+    private List<Song> songs;
 
     public Artist(CreateArtistDto createArtistDto) {
-        this.artistName = createArtistDto.getArtistName();
+        this.name = createArtistDto.getArtistName();
     }
 }

@@ -3,7 +3,6 @@ package by.lapil.audioplayer.service;
 import by.lapil.audioplayer.model.dto.CreateSongDto;
 import by.lapil.audioplayer.model.dto.SongDto;
 import by.lapil.audioplayer.model.entity.Song;
-import by.lapil.audioplayer.utils.Genres;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +16,13 @@ public interface SongService {
 
     Song findById(Long id);
 
-    List<SongDto> findByTitleAndGenre(String name, Genres genre);
+    List<SongDto> findByTitleAndGenre(String name, String genre);
 
     SongDto update(Long id, CreateSongDto createSongDto);
+
+    List<SongDto> update(List<Song> songs);
+
+    SongDto patch(Long id, CreateSongDto createSongDto);
 
     void deleteById(Long id);
 }

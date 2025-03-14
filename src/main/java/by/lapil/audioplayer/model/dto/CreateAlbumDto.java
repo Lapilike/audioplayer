@@ -6,10 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class UpdateArtistDto {
-    String artistName;
-    List<Long> songIds;
-    List<Long> albumsIds;
+@NoArgsConstructor
+public class CreateAlbumDto {
+    String name;
+    Long artist;
+    List<Long> songs;
 }
