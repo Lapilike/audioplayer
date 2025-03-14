@@ -24,7 +24,7 @@ public class ArtistDto {
         }
         List<Album> albumList = artist.getAlbums();
         if (albumList != null) {
-            artistSongs = albumList.stream().map(Album::getName).toList();
+            artistAlbums = albumList.stream().map(Album::getName).toList();
         }
     }
 }

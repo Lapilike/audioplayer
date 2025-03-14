@@ -34,10 +34,11 @@ public class Artist {
     @OneToMany(
             fetch = FetchType.LAZY,
             mappedBy = "artist",
-            cascade = CascadeType.REMOVE)
+            cascade = CascadeType.ALL)
     private List<Album> albums;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "artist_song_id",
             joinColumns = @JoinColumn(name = "artist_id"),

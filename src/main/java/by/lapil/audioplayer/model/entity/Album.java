@@ -33,7 +33,7 @@ public class Album {
     @OneToMany(
             fetch = FetchType.LAZY,
             mappedBy = "album",
-            cascade = CascadeType.ALL)
+            cascade = CascadeType.PERSIST)
     private List<Song> songs;
 
     @ManyToOne

@@ -11,5 +11,4 @@ import lombok.NoArgsConstructor;
 public class UpdateArtistDto {
     String artistName;
     List<Long> songIds;
-    List<Long> albumsIds;
 }

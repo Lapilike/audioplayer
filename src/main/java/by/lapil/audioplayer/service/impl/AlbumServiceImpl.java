@@ -31,11 +31,6 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
-    public List<Album> findAllById(List<Long> ids) {
-        return albumRepository.findAllById(ids);
-    }
-
-    @Override
     public List<AlbumDto> findByName(String name) {
         List<Album> albumList = albumRepository.findByName(name);
         if (albumList.isEmpty()) {
@@ -74,7 +69,20 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
+    public List<AlbumDto> update(List<Album> albums) {
+        List<Album> savedAlbums = albumRepository.saveAll(albums);
+        return savedAlbums.stream().map(AlbumDto::new).toList();
+    }
+
+    @Override
     public void delete(Long id) {
+        Album album = albumRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(NotFoundException.ALBUM_NOT_FOUND));
+
+        Artist artist = album.getArtist();
+        artist.getAlbums().remove(album);
+
+        artistService.update(new ArrayList<>(List.of(artist)));
         albumRepository.deleteById(id);
     }
 }

@@ -8,13 +8,13 @@ import java.util.List;
 public interface AlbumService {
     List<AlbumDto> findAll();
 
-    List<Album> findAllById(List<Long> ids);
-
     List<AlbumDto> findByName(String name);
 
     AlbumDto create(CreateAlbumDto createDto);
 
     AlbumDto update(Long id, CreateAlbumDto createDto);
+
+    List<AlbumDto> update(List<Album> albums);
 
     void delete(Long id);
 }
