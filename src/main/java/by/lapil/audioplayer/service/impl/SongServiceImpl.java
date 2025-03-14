@@ -1,6 +1,5 @@
 package by.lapil.audioplayer.service.impl;
 
-import by.lapil.audioplayer.model.dto.ArtistDto;
 import by.lapil.audioplayer.model.dto.CreateSongDto;
 import by.lapil.audioplayer.model.dto.SongDto;
 import by.lapil.audioplayer.model.entity.Artist;
@@ -57,7 +56,7 @@ public class SongServiceImpl implements SongService {
     @Override
     public Song findById(Long id) {
         return songRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Song not found"));
+                .orElseThrow(() -> new NotFoundException(NotFoundException.SONG_NOT_FOUND));
     }
 
     @Override
@@ -70,7 +69,7 @@ public class SongServiceImpl implements SongService {
         }
 
         if (songs.isEmpty()) {
-            throw new NotFoundException("Song not found");
+            throw new NotFoundException(NotFoundException.SONG_NOT_FOUND);
         }
         List<SongDto> songDtos = songs.stream()
                 .map(SongDto::new)
@@ -94,7 +93,7 @@ public class SongServiceImpl implements SongService {
         }
 
         Song song = songRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Song not found"));
+                .orElseThrow(() -> new NotFoundException(NotFoundException.SONG_NOT_FOUND));
         song.setTitle(createSongDto.getTitle());
         addSongToArtist(createSongDto, song);
 
@@ -109,7 +108,7 @@ public class SongServiceImpl implements SongService {
     @Override
     public List<SongDto> update(List<Song> songs) {
         if (songs == null) {
-            throw new NotFoundException("Songs not found");
+            throw new NotFoundException(NotFoundException.SONG_NOT_FOUND);
         }
 
         List<Song> savedSongs = songRepository.saveAll(songs);
@@ -142,7 +141,7 @@ public class SongServiceImpl implements SongService {
     @Override
     public SongDto patch(Long id, CreateSongDto createSongDto) {
         Song song = songRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Song not found"));
+                .orElseThrow(() -> new NotFoundException(NotFoundException.SONG_NOT_FOUND));
         if (createSongDto.getTitle() != null) {
             song.setTitle(createSongDto.getTitle());
         }
@@ -163,7 +162,7 @@ public class SongServiceImpl implements SongService {
     @Override
     public void deleteById(Long id) {
         Song song = songRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Song not found"));
+                .orElseThrow(() -> new NotFoundException(NotFoundException.SONG_NOT_FOUND));
         List<Artist> artistList = song.getArtist();
         if (artistList != null && !artistList.isEmpty()) {
             artistList.forEach(artist -> artist.getSongs().remove(song));

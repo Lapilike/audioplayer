@@ -39,7 +39,7 @@ public class ArtistServiceImpl implements ArtistService {
     @Override
     public Artist findById(Long id) {
         return artistRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Artist not found"));
+                .orElseThrow(() -> new NotFoundException(NotFoundException.ARTIST_NOT_FOUND));
     }
 
     @Override
@@ -56,7 +56,7 @@ public class ArtistServiceImpl implements ArtistService {
     @Override
     public ArtistDto update(Long id, UpdateArtistDto updateDto) {
         Artist artist = artistRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Artist not found"));
+                .orElseThrow(() -> new NotFoundException(NotFoundException.ARTIST_NOT_FOUND));
         if (updateDto.getArtistName() == null ||
                 updateDto.getAlbumsIds() == null ||
                 updateDto.getSongIds() == null) {
@@ -72,7 +72,7 @@ public class ArtistServiceImpl implements ArtistService {
     @Override
     public List<ArtistDto> update(List<Artist> artistList) {
         if (artistList == null || artistList.isEmpty()) {
-            throw new NotFoundException("Artist not found");
+            throw new NotFoundException(NotFoundException.ARTIST_NOT_FOUND);
         }
         List<Artist> artistSaveList = artistRepository.saveAll(artistList);
         return artistSaveList.stream().map(ArtistDto::new).toList();
@@ -81,7 +81,7 @@ public class ArtistServiceImpl implements ArtistService {
     @Override
     public ArtistDto patch(Long id, UpdateArtistDto updateDto) {
         Artist artist = artistRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Artist not found"));
+                .orElseThrow(() -> new NotFoundException(NotFoundException.ARTIST_NOT_FOUND));
         if (updateDto.getArtistName() != null) {
             artist.setName(updateDto.getArtistName());
         }
@@ -108,7 +108,7 @@ public class ArtistServiceImpl implements ArtistService {
     @Override
     public void deleteById(Long id) {
         Artist artist = artistRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Artist not found"));
+                .orElseThrow(() -> new NotFoundException(NotFoundException.ARTIST_NOT_FOUND));
 
         List<Song> songs = artist.getSongs();
         songs.forEach(song -> song.getArtist().remove(artist));

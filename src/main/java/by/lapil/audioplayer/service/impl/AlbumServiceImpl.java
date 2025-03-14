@@ -39,7 +39,7 @@ public class AlbumServiceImpl implements AlbumService {
     public List<AlbumDto> findByName(String name) {
         List<Album> albumList = albumRepository.findByName(name);
         if (albumList.isEmpty()) {
-            throw new NotFoundException("Album not found");
+            throw new NotFoundException(NotFoundException.ALBUM_NOT_FOUND);
         }
         return albumList.stream().map(AlbumDto::new).toList();
     }
@@ -65,7 +65,7 @@ public class AlbumServiceImpl implements AlbumService {
     @Override
     public AlbumDto update(Long id, CreateAlbumDto createDto) {
         Album album = albumRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Album not found"));
+                .orElseThrow(() -> new NotFoundException(NotFoundException.ALBUM_NOT_FOUND));
         if (!createDto.getName().isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "All fields must be filled");
         }
