@@ -47,18 +47,15 @@ public class AlbumServiceImpl implements AlbumService {
     @Override
     public AlbumDto create(CreateAlbumDto createDto) {
         Album album = new Album(createDto);
-        System.out.println(createDto);
         List<Song> songList = songService.findAllById(createDto.getSongs());
         Artist artist = artistService.findById(createDto.getArtist());
         album.setSongs(songList);
         album.setArtist(artist);
         final Album savedAlbum = albumRepository.save(album);
 
-        System.out.println("Pass1");
         artist.getAlbums().add(album);
         artistService.update(new ArrayList<>(List.of(artist)));
 
-        System.out.println("Pass2");
         songList.forEach(song -> song.setAlbum(album));
         songService.update(songList);
 

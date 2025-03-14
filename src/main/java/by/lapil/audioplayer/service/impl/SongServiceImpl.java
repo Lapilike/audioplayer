@@ -76,8 +76,6 @@ public class SongServiceImpl implements SongService {
                 .map(SongDto::new)
                 .toList();
 
-        System.out.println(songDtos);
-
         if (genre != null) {
             Genres genreEnum = Genres.parseGenre(genre);
             songDtos = songDtos.stream()
@@ -114,19 +112,15 @@ public class SongServiceImpl implements SongService {
             throw new NotFoundException("Songs not found");
         }
 
-        System.out.println(songs.stream().map(SongDto::new).toList());
         List<Song> savedSongs = songRepository.saveAll(songs);
 
-        System.out.println("Pass4");
         return savedSongs.stream().map(SongDto::new).toList();
     }
 
     private void addSongToArtist(CreateSongDto createDto, Song song) {
         List<Artist> artistList = artistService.findAllById(createDto.getArtists());
         List<Artist> songArtistList = song.getArtist();
-        System.out.println(artistList.stream().map(ArtistDto::new).toList());
         if (!artistList.isEmpty()) {
-            System.out.println("Pass1");
             List<Artist> newArtistList = new ArrayList<>(songArtistList);
             newArtistList.removeAll(artistList);
             if (!newArtistList.isEmpty()) {
@@ -143,7 +137,6 @@ public class SongServiceImpl implements SongService {
                 artistService.update(removeArtistList);
             }
         }
-        System.out.println(new SongDto(song));
     }
 
     @Override
@@ -154,7 +147,6 @@ public class SongServiceImpl implements SongService {
             song.setTitle(createSongDto.getTitle());
         }
         if (createSongDto.getArtists() != null) {
-            System.out.println(new SongDto(song));
             addSongToArtist(createSongDto, song);
         }
         if (createSongDto.getGenre() != null) {
