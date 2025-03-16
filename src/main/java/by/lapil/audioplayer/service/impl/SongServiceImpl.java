@@ -174,7 +174,6 @@ public class SongServiceImpl implements SongService {
             album.getSongs().remove(song);
         }
 
-        System.err.println("Pass1");
         songRepository.deleteById(song.getId());
     }
 }
