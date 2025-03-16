@@ -2,6 +2,7 @@ package by.lapil.audioplayer.service.impl;
 
 import by.lapil.audioplayer.model.dto.CreateSongDto;
 import by.lapil.audioplayer.model.dto.SongDto;
+import by.lapil.audioplayer.model.entity.Album;
 import by.lapil.audioplayer.model.entity.Artist;
 import by.lapil.audioplayer.model.entity.Song;
 import by.lapil.audioplayer.repository.SongRepository;
@@ -10,7 +11,6 @@ import by.lapil.audioplayer.service.SongService;
 import by.lapil.audioplayer.utils.Genres;
 import by.lapil.audioplayer.utils.IncorrectGenreException;
 import by.lapil.audioplayer.utils.NotFoundException;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
@@ -118,22 +118,23 @@ public class SongServiceImpl implements SongService {
 
     private void addSongToArtist(CreateSongDto createDto, Song song) {
         List<Artist> artistList = artistService.findAllById(createDto.getArtists());
-        List<Artist> songArtistList = song.getArtist();
+
         if (!artistList.isEmpty()) {
-            List<Artist> newArtistList = new ArrayList<>(songArtistList);
-            newArtistList.removeAll(artistList);
+            List<Artist> newArtistList = artistService.findAllById(createDto.getArtists());
+            newArtistList.removeAll(song.getArtist());
             if (!newArtistList.isEmpty()) {
                 song.getArtist().addAll(newArtistList);
                 newArtistList.forEach(artist -> artist.getSongs().add(song));
                 artistService.update(newArtistList);
             }
 
-            List<Artist> removeArtistList = new ArrayList<>(artistList);
-            removeArtistList.removeAll(songArtistList);
+            List<Artist> removeArtistList = song.getArtist();
+            removeArtistList.removeAll(artistList);
             if (!removeArtistList.isEmpty()) {
-                song.getArtist().removeAll(removeArtistList);
                 removeArtistList.forEach(artist -> artist.getSongs().remove(song));
                 artistService.update(removeArtistList);
+
+                song.getArtist().removeAll(removeArtistList);
             }
         }
     }
@@ -167,6 +168,13 @@ public class SongServiceImpl implements SongService {
         if (artistList != null && !artistList.isEmpty()) {
             artistList.forEach(artist -> artist.getSongs().remove(song));
         }
-        songRepository.deleteById(id);
+
+        Album album = song.getAlbum();
+        if (album != null) {
+            album.getSongs().remove(song);
+        }
+
+        System.err.println("Pass1");
+        songRepository.deleteById(song.getId());
     }
 }

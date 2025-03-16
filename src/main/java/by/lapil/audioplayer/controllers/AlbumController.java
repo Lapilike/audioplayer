@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,9 +37,14 @@ public class AlbumController {
         return albumService.create(createDto);
     }
 
+    @PutMapping("{id}")
+    public AlbumDto update(@PathVariable Long id, @RequestBody CreateAlbumDto createDto) {
+        return albumService.patch(id, createDto);
+    }
+
     @PatchMapping("{id}")
-    public AlbumDto update(@RequestBody CreateAlbumDto createAlbumDto, @PathVariable Long id) {
-        return albumService.update(id, createAlbumDto);
+    public AlbumDto patch(@RequestBody CreateAlbumDto createAlbumDto, @PathVariable Long id) {
+        return albumService.patch(id, createAlbumDto);
     }
 
     @DeleteMapping("{id}")

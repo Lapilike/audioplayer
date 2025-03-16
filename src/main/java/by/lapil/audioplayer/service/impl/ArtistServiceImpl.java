@@ -6,10 +6,13 @@ import by.lapil.audioplayer.model.dto.UpdateArtistDto;
 import by.lapil.audioplayer.model.entity.Artist;
 import by.lapil.audioplayer.model.entity.Song;
 import by.lapil.audioplayer.repository.ArtistRepository;
+import by.lapil.audioplayer.service.AlbumService;
 import by.lapil.audioplayer.service.ArtistService;
 import by.lapil.audioplayer.service.SongService;
 import by.lapil.audioplayer.utils.NotFoundException;
+import jakarta.transaction.Transactional;
 import java.util.List;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -18,11 +21,14 @@ import org.springframework.web.server.ResponseStatusException;
 public class ArtistServiceImpl implements ArtistService {
     private final ArtistRepository artistRepository;
     private final SongService songService;
+    private final AlbumService albumService;
 
     public ArtistServiceImpl(ArtistRepository artistRepository,
-                             SongService songService) {
+                             SongService songService,
+                             @Lazy AlbumService albumService) {
         this.artistRepository = artistRepository;
         this.songService = songService;
+        this.albumService = albumService;
     }
 
     @Override
@@ -51,11 +57,11 @@ public class ArtistServiceImpl implements ArtistService {
     public ArtistDto update(Long id, UpdateArtistDto updateDto) {
         Artist artist = artistRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(NotFoundException.ARTIST_NOT_FOUND));
-        if (updateDto.getArtistName() == null ||
+        if (updateDto.getName() == null ||
                 updateDto.getSongIds() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "All fields must be filled");
         }
-        artist.setName(updateDto.getArtistName());
+        artist.setName(updateDto.getName());
         return new ArtistDto(artistRepository.save(artist));
     }
 
@@ -72,8 +78,8 @@ public class ArtistServiceImpl implements ArtistService {
     public ArtistDto patch(Long id, UpdateArtistDto updateDto) {
         Artist artist = artistRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(NotFoundException.ARTIST_NOT_FOUND));
-        if (updateDto.getArtistName() != null) {
-            artist.setName(updateDto.getArtistName());
+        if (updateDto.getName() != null) {
+            artist.setName(updateDto.getName());
         }
         if (updateDto.getSongIds() != null) {
             List<Song> songList = songService.findAllById(updateDto.getSongIds());
@@ -90,19 +96,24 @@ public class ArtistServiceImpl implements ArtistService {
         return new ArtistDto(artist);
     }
 
+    @Transactional
     @Override
     public void deleteById(Long id) {
         Artist artist = artistRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(NotFoundException.ARTIST_NOT_FOUND));
 
-        List<Song> songs = artist.getSongs();
-        songs.forEach(song -> song.getArtist().remove(artist));
+        artist.getAlbums().forEach(album -> albumService.delete(album.getId()));
+        artist.getAlbums().clear();
+
+        List<Long> songIdsToDelete = artist.getSongs().stream()
+                .filter(song -> song.getArtist().size() == 1 && song.getArtist().contains(artist))
+                .map(Song::getId)
+                .toList();
+
+        songIdsToDelete.forEach(songService::deleteById);
+
         artist.getSongs().clear();
-        for (Song song : songs) {
-            if (song.getArtist().isEmpty()) {
-                songService.deleteById(song.getId());
-            }
-        }
+
         artistRepository.delete(artist);
     }
 }

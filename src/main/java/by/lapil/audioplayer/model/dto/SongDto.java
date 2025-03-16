@@ -24,7 +24,9 @@ public class SongDto {
         if (artistSet != null) {
             this.artists = artistSet.stream().map(Artist::getName).toList();
         }
-        this.album = song.getAlbum().getName();
+        if (song.getAlbum() != null) {
+            this.album = song.getAlbum().getName();
+        }
         this.genre = song.getGenre();
         this.filePath = song.getFilePath();
     }

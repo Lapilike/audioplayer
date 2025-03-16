@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateArtistDto {
-    String artistName;
+    String name;
     List<Long> songIds;
 }

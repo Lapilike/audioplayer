@@ -58,20 +58,49 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
-    public AlbumDto update(Long id, CreateAlbumDto createDto) {
+    public AlbumDto patch(Long id, CreateAlbumDto createDto) {
         Album album = albumRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(NotFoundException.ALBUM_NOT_FOUND));
-        if (!createDto.getName().isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "All fields must be filled");
+        if (createDto.getName() != null && !createDto.getName().isBlank()) {
+            album.setName(createDto.getName());
         }
-        album.setName(createDto.getName());
-        return new AlbumDto(albumRepository.save(album));
-    }
+        if (createDto.getArtist() != null) {
+            try {
+                Artist newArtist = artistService.findById(createDto.getArtist());
+                newArtist.getAlbums().add(album);
 
-    @Override
-    public List<AlbumDto> update(List<Album> albums) {
-        List<Album> savedAlbums = albumRepository.saveAll(albums);
-        return savedAlbums.stream().map(AlbumDto::new).toList();
+                Artist oldArtist = album.getArtist();
+                oldArtist.getAlbums().remove(album);
+
+                album.setArtist(newArtist);
+
+                artistService.update(List.of(oldArtist, newArtist));
+                album.setArtist(newArtist);
+            } catch (NotFoundException e) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+            }
+        }
+        if (createDto.getSongs() != null) {
+            List<Song> songList = songService.findAllById(createDto.getSongs());
+            if (songList.isEmpty()) {
+                List<Song> deletedSongList = album.getSongs();
+                deletedSongList.forEach(song -> song.setAlbum(null));
+                album.getSongs().clear();
+            } else {
+                List<Song> newSongList = songService.findAllById(createDto.getSongs());
+                newSongList.removeAll(album.getSongs());
+                newSongList.forEach(song -> song.setAlbum(album));
+
+                List<Song> deletedSongList = album.getSongs();
+                deletedSongList.removeAll(songList);
+                deletedSongList.forEach(song -> song.setAlbum(null));
+
+                album.getSongs().removeAll(deletedSongList);
+                album.getSongs().addAll(newSongList);
+            }
+        }
+
+        return new AlbumDto(albumRepository.save(album));
     }
 
     @Override
@@ -79,10 +108,13 @@ public class AlbumServiceImpl implements AlbumService {
         Album album = albumRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(NotFoundException.ALBUM_NOT_FOUND));
 
-        Artist artist = album.getArtist();
-        artist.getAlbums().remove(album);
+        List<Song> songList = album.getSongs();
+        if (songList != null && !songList.isEmpty()) {
+            songList.forEach(song -> song.setAlbum(null));
+            album.getSongs().clear();
+            albumRepository.save(album);
+        }
 
-        artistService.update(new ArrayList<>(List.of(artist)));
         albumRepository.deleteById(id);
     }
 }

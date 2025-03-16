@@ -5,7 +5,9 @@ import by.lapil.audioplayer.model.dto.CreateArtistDto;
 import by.lapil.audioplayer.model.dto.UpdateArtistDto;
 import by.lapil.audioplayer.model.entity.Artist;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
+@Service
 public interface ArtistService {
     List<Artist> findAll();
 
