@@ -149,6 +149,9 @@ public class SongServiceImpl implements SongService {
         if (createSongDto.getArtists() != null) {
             addSongToArtist(createSongDto, song);
         }
+        if (createSongDto.getFilePath() != null) {
+            song.setFilePath(createSongDto.getFilePath());
+        }
         if (createSongDto.getGenre() != null) {
             try {
                 song.setGenre(Genres.parseGenre(createSongDto.getGenre().toUpperCase()));

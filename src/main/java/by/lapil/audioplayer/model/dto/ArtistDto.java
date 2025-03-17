@@ -12,19 +12,21 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ArtistDto {
-    private String artistName;
-    private List<String> artistSongs;
-    private List<String> artistAlbums;
+    private String name;
+    private List<String> songs;
+    private List<String> albums;
+    private Long id;
 
     public ArtistDto(Artist artist) {
-        artistName = artist.getName();
+        name = artist.getName();
         List<Song> songList = artist.getSongs();
         if (songList != null) {
-            artistSongs = songList.stream().map(Song::getTitle).toList();
+            songs = songList.stream().map(Song::getTitle).toList();
         }
         List<Album> albumList = artist.getAlbums();
         if (albumList != null) {
-            artistAlbums = albumList.stream().map(Album::getName).toList();
+            albums = albumList.stream().map(Album::getName).toList();
         }
+        this.id = artist.getId();
     }
 }

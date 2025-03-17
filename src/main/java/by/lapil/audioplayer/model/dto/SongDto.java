@@ -17,6 +17,7 @@ public class SongDto {
     private String album;
     private Genres genre;
     private String filePath;
+    private Long id;
 
     public SongDto(Song song) {
         this.title = song.getTitle();
@@ -29,5 +30,6 @@ public class SongDto {
         }
         this.genre = song.getGenre();
         this.filePath = song.getFilePath();
+        this.id = song.getId();
     }
 }

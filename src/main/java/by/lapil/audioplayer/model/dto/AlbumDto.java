@@ -14,10 +14,12 @@ public class AlbumDto {
     private String name;
     private String artistName;
     private List<String> songName;
+    private Long id;
 
     public AlbumDto(Album album) {
         this.name = album.getName();
         this.artistName = album.getArtist().getName();
         this.songName = album.getSongs().stream().map(Song::getTitle).toList();
+        this.id = album.getId();
     }
 }
