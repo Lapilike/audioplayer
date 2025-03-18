@@ -1,5 +1,6 @@
 package by.lapil.audioplayer.service.impl;
 
+import by.lapil.audioplayer.cache.Cache;
 import by.lapil.audioplayer.model.dto.CreateSongDto;
 import by.lapil.audioplayer.model.dto.SongDto;
 import by.lapil.audioplayer.model.entity.Album;
@@ -24,10 +25,14 @@ import org.springframework.web.server.ResponseStatusException;
 public class SongServiceImpl implements SongService {
     private final SongRepository songRepository;
     private final ArtistService artistService;
+    private final Cache<List<Song>> cache;
 
-    public SongServiceImpl(SongRepository songRepository, @Lazy ArtistService artistService) {
+    public SongServiceImpl(SongRepository songRepository,
+                           @Lazy ArtistService artistService,
+                           Cache<List<Song>> cache) {
         this.songRepository = songRepository;
         this.artistService = artistService;
+        this.cache = cache;
     }
 
     @Override
@@ -61,28 +66,20 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
-    public List<SongDto> findByTitleAndGenre(String title, String genre) {
-        List<Song> songs;
-        if (title != null && !title.isBlank()) {
-            songs = songRepository.findByTitle(title);
-        } else {
-            songs = songRepository.findAll();
+    public List<SongDto> findByCriteria(String title, String genre, String artistName) {
+        if ((title == null || title.isEmpty()) &&
+                (genre == null || genre.isEmpty()) &&
+                (artistName == null || artistName.isEmpty())) {
+            throw new IllegalArgumentException("Необходимо указать хотя бы один параметр поиска!");
+        }
+        String cacheKey = title + "-" + genre + "-" + artistName;
+        List<Song> songs = cache.get(cacheKey);
+        if (songs != null) {
+            return songs.stream().map(SongDto::new).toList();
         }
 
-        if (songs.isEmpty()) {
-            throw new NotFoundException(NotFoundException.SONG_NOT_FOUND);
-        }
-        List<SongDto> songDtos = songs.stream()
-                .map(SongDto::new)
-                .toList();
-
-        if (genre != null) {
-            Genres genreEnum = Genres.parseGenre(genre);
-            songDtos = songDtos.stream()
-                    .filter(u -> u.getGenre().equals(genreEnum))
-                    .toList();
-        }
-        return songDtos;
+        songs = songRepository.findByCriteria(title, genre, artistName);
+        return songs.stream().map(SongDto::new).toList();
     }
 
     @Override
