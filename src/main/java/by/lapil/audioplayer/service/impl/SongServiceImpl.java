@@ -11,6 +11,7 @@ import by.lapil.audioplayer.service.SongService;
 import by.lapil.audioplayer.utils.Genres;
 import by.lapil.audioplayer.utils.IncorrectGenreException;
 import by.lapil.audioplayer.utils.NotFoundException;
+import jakarta.transaction.Transactional;
 import java.util.List;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
@@ -163,6 +164,7 @@ public class SongServiceImpl implements SongService {
         return new SongDto(songRepository.save(song));
     }
 
+    @Transactional
     @Override
     public void deleteById(Long id) {
         Song song = songRepository.findById(id)
