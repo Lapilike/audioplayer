@@ -9,6 +9,18 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SongRepository extends JpaRepository<Song, Long> {
-    @Query("SELECT s FROM Song s WHERE LOWER(s.title) LIKE LOWER(CONCAT('%', :titlePart, '%'))")
-    List<Song> findByTitle(@Param("titlePart") String title);
+    //    @Query("SELECT s FROM Song s " +
+    //               "JOIN s.artist a " +
+    //               "WHERE (LOWER(a.name) LIKE LOWER(CONCAT('%', :artistName, '%')))" +
+    //               "AND (LOWER(s.title) like LOWER(CONCAT('%', :title ,'%')) ) ")
+    //    List<Song> findByCriteria(@Param("artistName") String artistName,
+    //                              @Param("title") String title);
+
+    @Query(value = "SELECT DISTINCT s.* FROM song s" +
+                 "    JOIN artist_song_id sa ON s.id = sa.song_id" +
+                 "    JOIN artist a ON sa.artist_id = a.id" +
+                 "    WHERE (LOWER(a.name) LIKE LOWER(CONCAT('%', :artistName, '%')))" +
+                 "    AND (LOWER(s.title) LIKE LOWER(CONCAT('%', :title, '%')))",
+                 nativeQuery = true)
+      List<Song> findByCriteria(@Param("artistName") String artistName, @Param("title") String title);
 }

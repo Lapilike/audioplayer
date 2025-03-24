@@ -10,6 +10,7 @@ import by.lapil.audioplayer.service.AlbumService;
 import by.lapil.audioplayer.service.ArtistService;
 import by.lapil.audioplayer.service.SongService;
 import by.lapil.audioplayer.utils.NotFoundException;
+import jakarta.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -103,6 +104,7 @@ public class AlbumServiceImpl implements AlbumService {
         return new AlbumDto(albumRepository.save(album));
     }
 
+    @Transactional
     @Override
     public void delete(Long id) {
         Album album = albumRepository.findById(id)

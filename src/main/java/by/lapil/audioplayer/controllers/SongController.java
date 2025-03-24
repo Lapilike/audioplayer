@@ -35,9 +35,9 @@ public class SongController {
     }
 
     @GetMapping("/search")
-    public List<SongDto> getByName(@RequestParam(required = false) String name,
-                                   @RequestParam(required = false) String genre) {
-        return songService.findByTitleAndGenre(name, genre);
+    public List<SongDto> getByName(@RequestParam(required = false) String title,
+                                   @RequestParam(required = false) String artist) {
+        return songService.findByCriteria(title, artist);
     }
 
     @PostMapping

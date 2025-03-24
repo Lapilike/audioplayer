@@ -16,7 +16,7 @@ public interface SongService {
 
     Song findById(Long id);
 
-    List<SongDto> findByTitleAndGenre(String name, String genre);
+    List<SongDto> findByCriteria(String title, String artistName);
 
     SongDto update(Long id, CreateSongDto createSongDto);
 
