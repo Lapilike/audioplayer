@@ -16,16 +16,8 @@ public class Cache<T> extends LinkedHashMap<String, T> {
         super(CACHE_SIZE, 0.75f, true);
     }
 
-    public T get(String key) {
-        return super.get(key);
-    }
-
     public Set<String> getKeys(Long id) {
         return keyTracker.getOrDefault(id, null);
-    }
-
-    public T put(String key, T value) {
-        return super.put(key, value);
     }
 
     public void update(Long id, T value) {
@@ -48,6 +40,7 @@ public class Cache<T> extends LinkedHashMap<String, T> {
         }
     }
 
+    @Override
     public void clear() {
         keyTracker.clear();
         super.clear();
