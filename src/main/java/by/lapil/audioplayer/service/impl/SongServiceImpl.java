@@ -14,6 +14,9 @@ import by.lapil.audioplayer.utils.IncorrectGenreException;
 import by.lapil.audioplayer.utils.NotFoundException;
 import jakarta.transaction.Transactional;
 import java.util.List;
+import java.util.Set;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpStatus;
@@ -26,6 +29,7 @@ public class SongServiceImpl implements SongService {
     private final SongRepository songRepository;
     private final ArtistService artistService;
     private final Cache<List<Song>> cache;
+    private final Logger logger = LoggerFactory.getLogger(SongServiceImpl.class);
 
     public SongServiceImpl(SongRepository songRepository,
                            @Lazy ArtistService artistService,
@@ -37,6 +41,7 @@ public class SongServiceImpl implements SongService {
 
     @Override
     public SongDto create(CreateSongDto createSongDto) {
+        logger.info("Creating new song");
         Song song = new Song();
         song.setTitle(createSongDto.getTitle());
         song.setGenre(Genres.parseGenre(createSongDto.getGenre()));
@@ -51,34 +56,55 @@ public class SongServiceImpl implements SongService {
 
     @Override
     public List<Song> findAll() {
+        logger.info("Finding all songs");
         return songRepository.findAll();
     }
 
     @Override
     public List<Song> findAllById(List<Long> ids) {
+        logger.info("Finding all songs by ids");
         return songRepository.findAllById(ids);
     }
 
     @Override
     public Song findById(Long id) {
+        logger.info("Finding song by id");
         return songRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(NotFoundException.SONG_NOT_FOUND));
     }
 
     @Override
-    public List<SongDto> findByCriteria(String title, String genre, String artistName) {
+    public List<SongDto> findByCriteria(String title, String artistName) {
         if ((title == null || title.isEmpty()) &&
-                (genre == null || genre.isEmpty()) &&
                 (artistName == null || artistName.isEmpty())) {
             throw new IllegalArgumentException("Необходимо указать хотя бы один параметр поиска!");
         }
-        String cacheKey = title + "-" + genre + "-" + artistName;
+        logger.info("Finding songs by criteria");
+        String cacheKey = title + "-" + artistName;
         List<Song> songs = cache.get(cacheKey);
         if (songs != null) {
+            logger.info("Found cached songs");
             return songs.stream().map(SongDto::new).toList();
         }
 
-        songs = songRepository.findByCriteria(title, genre, artistName);
+        if (title == null) {
+            title = "";
+        }
+        if (artistName == null) {
+            artistName = "";
+        }
+
+        songs = songRepository.findByCriteria(artistName, title);
+        if (songs == null || songs.isEmpty()) {
+            throw new NotFoundException(NotFoundException.SONG_NOT_FOUND);
+        }
+
+        for (Song song : songs) {
+            cache.trackKey(song.getId(), cacheKey);
+        }
+        cache.put(cacheKey, songs);
+
+        logger.info("Found songs from database, saved in cache");
         return songs.stream().map(SongDto::new).toList();
     }
 
@@ -100,6 +126,20 @@ public class SongServiceImpl implements SongService {
         } catch (IllegalArgumentException e) {
             throw new IncorrectGenreException("Incorrect genre: " + createSongDto.getGenre());
         }
+
+        Set<String> cacheKeys = cache.getKeys(id);
+        Song oldSong = songRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(NotFoundException.SONG_NOT_FOUND));
+
+        if (cacheKeys != null) {
+            for (String cacheKey : cacheKeys) {
+                List<Song> songs = cache.get(cacheKey);
+                songs.remove(oldSong);
+                songs.add(song);
+                cache.put(cacheKey, songs);
+            }
+        }
+
         return new SongDto(songRepository.save(song));
     }
 
@@ -177,5 +217,6 @@ public class SongServiceImpl implements SongService {
         }
 
         songRepository.deleteById(song.getId());
+        cache.remove(id);
     }
 }

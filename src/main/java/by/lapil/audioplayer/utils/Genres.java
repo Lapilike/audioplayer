@@ -14,6 +14,7 @@ public enum Genres {
     CLASSICAL;
 
     public static Genres parseGenre(String genreStr) {
+        if (genreStr == null || genreStr.isEmpty()) return null;
         try {
             return Genres.valueOf(genreStr.toUpperCase());
         } catch (IllegalArgumentException e) {

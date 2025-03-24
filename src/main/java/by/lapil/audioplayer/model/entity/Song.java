@@ -4,6 +4,8 @@ import by.lapil.audioplayer.model.dto.CreateSongDto;
 import by.lapil.audioplayer.utils.Genres;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -36,6 +38,7 @@ public class Song {
     @ManyToMany(mappedBy = "songs")
     private List<Artist> artist;
 
+    @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false)
     private Genres genre;
 
