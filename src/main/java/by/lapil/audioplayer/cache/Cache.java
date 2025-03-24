@@ -47,8 +47,22 @@ public class Cache<T> extends LinkedHashMap<String, T> {
         super.clear();
     }
 
-    public boolean equals(Integer size) {
-        return Objects.equals(size, CACHE_SIZE);
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Cache<?> cache = (Cache<?>) obj;
+        return Objects.equals(keyTracker, cache.keyTracker) &&
+                super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), keyTracker);
     }
 
     @Override
