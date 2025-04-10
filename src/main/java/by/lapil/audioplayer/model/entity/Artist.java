@@ -48,6 +48,6 @@ public class Artist {
     private List<Song> songs;
 
     public Artist(CreateArtistDto createArtistDto) {
-        this.name = createArtistDto.getArtistName();
+        this.name = createArtistDto.getName();
     }
 }

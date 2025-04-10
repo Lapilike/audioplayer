@@ -1,5 +1,6 @@
 package by.lapil.audioplayer.service.impl;
 
+import by.lapil.audioplayer.exception.NotFoundException;
 import by.lapil.audioplayer.model.dto.AlbumDto;
 import by.lapil.audioplayer.model.dto.CreateAlbumDto;
 import by.lapil.audioplayer.model.entity.Album;
@@ -9,7 +10,6 @@ import by.lapil.audioplayer.repository.AlbumRepository;
 import by.lapil.audioplayer.service.AlbumService;
 import by.lapil.audioplayer.service.ArtistService;
 import by.lapil.audioplayer.service.SongService;
-import by.lapil.audioplayer.utils.NotFoundException;
 import jakarta.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;

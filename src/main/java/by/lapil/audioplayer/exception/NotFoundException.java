@@ -1,4 +1,4 @@
-package by.lapil.audioplayer.utils;
+package by.lapil.audioplayer.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

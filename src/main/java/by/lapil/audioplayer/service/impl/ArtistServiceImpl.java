@@ -1,5 +1,6 @@
 package by.lapil.audioplayer.service.impl;
 
+import by.lapil.audioplayer.exception.NotFoundException;
 import by.lapil.audioplayer.model.dto.ArtistDto;
 import by.lapil.audioplayer.model.dto.CreateArtistDto;
 import by.lapil.audioplayer.model.dto.UpdateArtistDto;
@@ -9,7 +10,6 @@ import by.lapil.audioplayer.repository.ArtistRepository;
 import by.lapil.audioplayer.service.AlbumService;
 import by.lapil.audioplayer.service.ArtistService;
 import by.lapil.audioplayer.service.SongService;
-import by.lapil.audioplayer.utils.NotFoundException;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import org.springframework.context.annotation.Lazy;

@@ -47,7 +47,7 @@ public class Song {
 
     public Song(CreateSongDto musicDto) {
         this.title = musicDto.getTitle();
-        this.genre = Genres.parseGenre(musicDto.getGenre().toUpperCase());
+        this.genre = musicDto.getGenre();
         this.filePath = musicDto.getFilePath();
     }
 }
