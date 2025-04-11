@@ -11,7 +11,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -59,7 +58,7 @@ public class LogController {
                                 return false;
                             }
                         })
-                        .collect(Collectors.toList());
+                        .toList();
 
                 return ResponseEntity.ok(filteredLines);
             }

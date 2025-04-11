@@ -21,6 +21,9 @@ import org.springframework.web.server.ResponseStatusException;
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
+    private static final String ERROR = "error";
+    private static final String MESSAGE = "message";
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleValidationErrors(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
@@ -33,7 +36,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ValidationException.class)
     public ResponseEntity<Map<String, String>> handleCustomValidation(ValidationException ex) {
-        return ResponseEntity.badRequest().body(Map.of("error", ex.getMessage()));
+        return ResponseEntity.badRequest().body(Map.of(ERROR, ex.getMessage()));
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
@@ -41,8 +44,8 @@ public class GlobalExceptionHandler {
         Map<String, Object> body = new HashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("status", HttpStatus.BAD_REQUEST.value());
-        body.put("error", "Ошибка чтения тела запроса");
-        body.put("message", ex.getMessage());
+        body.put(ERROR, "Ошибка чтения тела запроса");
+        body.put(MESSAGE, ex.getMessage());
 
         Throwable cause = ex.getCause();
         if (cause instanceof InvalidFormatException ife) {
@@ -60,13 +63,13 @@ public class GlobalExceptionHandler {
                 log.warn("[VALIDATION] Некорректное значение '{}' для поля '{}'. Разрешено: {}",
                         invalidValue, fieldName, allowedValues);
 
-                body.put("message", "Некорректное значение в поле " + fieldName + ": '" + invalidValue +
+                body.put(MESSAGE, "Некорректное значение в поле " + fieldName + ": '" + invalidValue +
                         "'. Разрешённые значения: [" + allowedValues + "]");
                 return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
             }
             log.warn("[VALIDATION] Некорректное значение '{}' для поля '{}'",
                     invalidValue, fieldName);
-            body.put("message", "Некорректное значение в поле " + fieldName + ": '" + invalidValue + "'");
+            body.put(MESSAGE, "Некорректное значение в поле " + fieldName + ": '" + invalidValue + "'");
             return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
         }
 
@@ -77,9 +80,9 @@ public class GlobalExceptionHandler {
                     .findFirst()
                     .orElse("неизвестное поле");
 
-            body.put("message", "Некорректный тип данных в поле: " + field);
+            body.put(MESSAGE, "Некорректный тип данных в поле: " + field);
         } else {
-            body.put("message", "Ошибка чтения тела запроса: " + ex.getMessage());
+            body.put(MESSAGE, "Ошибка чтения тела запроса: " + ex.getMessage());
         }
 
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
@@ -91,8 +94,8 @@ public class GlobalExceptionHandler {
         Map<String, Object> body = new HashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("status", ex.getStatusCode().value());
-        body.put("error", ex.getStatusCode());
-        body.put("message", ex.getReason());
+        body.put(ERROR, ex.getStatusCode());
+        body.put(MESSAGE, ex.getReason());
         body.put("path", request.getRequestURI());
 
         return new ResponseEntity<>(body, ex.getStatusCode());
