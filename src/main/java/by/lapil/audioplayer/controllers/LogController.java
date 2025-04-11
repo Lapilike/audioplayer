@@ -1,5 +1,8 @@
 package by.lapil.audioplayer.controllers;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -9,10 +12,8 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
-
+import java.util.stream.Stream;
 import lombok.AllArgsConstructor;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,9 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
-
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RestController
 @RequestMapping("/api/v1/log")
@@ -50,19 +48,21 @@ public class LogController {
             LocalTime fromTime = from != null ? LocalTime.parse(from, TIME_FORMATTER) : LocalTime.MIN;
             LocalTime toTime = to != null ? LocalTime.parse(to, TIME_FORMATTER) : LocalTime.MAX;
 
-            List<String> filteredLines = Files.lines(filePath)
-                    .filter(line -> {
-                        try {
-                            String timePart = line.substring(11, 16);
-                            LocalTime logTime = LocalTime.parse(timePart, TIME_FORMATTER);
-                            return !logTime.isBefore(fromTime) && !logTime.isAfter(toTime);
-                        } catch (Exception e) {
-                            return false;
-                        }
-                    })
-                    .collect(Collectors.toList());
+            try (Stream<String> lines = Files.lines(filePath)) {
+                List<String> filteredLines = lines
+                        .filter(line -> {
+                            try {
+                                String timePart = line.substring(11, 16);
+                                LocalTime logTime = LocalTime.parse(timePart, TIME_FORMATTER);
+                                return !logTime.isBefore(fromTime) && !logTime.isAfter(toTime);
+                            } catch (Exception e) {
+                                return false;
+                            }
+                        })
+                        .collect(Collectors.toList());
 
-            return ResponseEntity.ok(filteredLines);
+                return ResponseEntity.ok(filteredLines);
+            }
         } catch (ResponseStatusException e) {
             throw e;
         } catch (Exception e) {

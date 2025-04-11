@@ -8,7 +8,6 @@ public class NotFoundException extends RuntimeException {
     public static final String SONG_NOT_FOUND = "Song Not Found";
     public static final String ALBUM_NOT_FOUND = "Album Not Found";
     public static final String ARTIST_NOT_FOUND = "Artist Not Found";
-    public static final String LOG_NOT_FOUND = "Log Not Found";
 
     public NotFoundException(String message) {
         super(message);
