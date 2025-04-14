@@ -21,7 +21,7 @@ import java.util.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class SongServiceTest {
+class SongServiceTest {
 
     @Mock
     private SongRepository songRepository;
@@ -38,17 +38,17 @@ public class SongServiceTest {
     private by.lapil.audioplayer.service.SongService songService;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         closeable = MockitoAnnotations.openMocks(this);
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    void tearDown() throws Exception {
         closeable.close();
     }
 
     @Test
-    public void create_ShouldSaveSongAndReturnDto() {
+    void create_ShouldSaveSongAndReturnDto() {
         CreateSongDto dto = new CreateSongDto();
         dto.setTitle("Test Song");
         dto.setGenre(Genres.ROCK);
@@ -69,14 +69,14 @@ public class SongServiceTest {
     }
 
     @Test
-    public void findAll_ShouldReturnListOfSongs() {
+    void findAll_ShouldReturnListOfSongs() {
         when(songRepository.findAll()).thenReturn(List.of(new Song()));
         List<Song> result = songService.findAll();
         assertThat(result).hasSize(1);
     }
 
     @Test
-    public void findById_WhenFound_ShouldReturnSong() {
+    void findById_WhenFound_ShouldReturnSong() {
         Song song = new Song();
         song.setId(1L);
         when(songRepository.findById(1L)).thenReturn(Optional.of(song));
@@ -86,21 +86,21 @@ public class SongServiceTest {
     }
 
     @Test
-    public void findById_WhenNotFound_ShouldThrowException() {
+    void findById_WhenNotFound_ShouldThrowException() {
         when(songRepository.findById(1L)).thenReturn(Optional.empty());
         assertThatThrownBy(() -> songService.findById(1L))
                 .isInstanceOf(NotFoundException.class);
     }
 
     @Test
-    public void update_WhenInvalidDto_ShouldThrowBadRequest() {
+    void update_WhenInvalidDto_ShouldThrowBadRequest() {
         CreateSongDto dto = new CreateSongDto();
         assertThatThrownBy(() -> songService.update(1L, dto))
                 .isInstanceOf(ResponseStatusException.class);
     }
 
     @Test
-    public void patch_WhenGenreIncorrect_ShouldThrowException() {
+    void patch_WhenGenreIncorrect_ShouldThrowException() {
         Song song = new Song();
         song.setId(1L);
         when(songRepository.findById(1L)).thenReturn(Optional.of(song));
@@ -113,7 +113,7 @@ public class SongServiceTest {
     }
 
     @Test
-    public void deleteById_WhenSongExists_ShouldDelete() {
+    void deleteById_WhenSongExists_ShouldDelete() {
         Song song = new Song();
         song.setId(1L);
         song.setArtist(new ArrayList<>());
