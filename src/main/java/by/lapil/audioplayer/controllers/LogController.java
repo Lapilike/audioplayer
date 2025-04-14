@@ -3,6 +3,7 @@ package by.lapil.audioplayer.controllers;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -29,6 +30,7 @@ public class LogController {
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
 
+    @Operation(summary = "Получить лог по определённой дате")
     @GetMapping("/{date}")
     public ResponseEntity<List<String>> getLogsByDate(@PathVariable String date,
                                                   @RequestParam(required = false) String from,
