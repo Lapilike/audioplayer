@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
         ex.getBindingResult().getFieldErrors().forEach(field ->
                 errors.put(field.getField(), field.getDefaultMessage())
         );
-        log.warn("Validation errors: {}", errors);
+        log.error("Validation errors: {}", errors);
         return ResponseEntity.badRequest().body(errors);
     }
 
@@ -60,14 +60,14 @@ public class GlobalExceptionHandler {
                 String allowedValues = String.join(", ",
                         java.util.Arrays.stream(allowed).map(Object::toString).toList());
 
-                log.warn("[VALIDATION] Некорректное значение '{}' для поля '{}'. Разрешено: {}",
+                log.error("[VALIDATION] Некорректное значение '{}' для поля '{}'. Разрешено: {}",
                         invalidValue, fieldName, allowedValues);
 
                 body.put(MESSAGE, "Некорректное значение в поле " + fieldName + ": '" + invalidValue +
                         "'. Разрешённые значения: [" + allowedValues + "]");
                 return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
             }
-            log.warn("[VALIDATION] Некорректное значение '{}' для поля '{}'",
+            log.error("[VALIDATION] Некорректное значение '{}' для поля '{}'",
                     invalidValue, fieldName);
             body.put(MESSAGE, "Некорректное значение в поле " + fieldName + ": '" + invalidValue + "'");
             return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
