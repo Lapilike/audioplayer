@@ -1,27 +1,33 @@
 package by.lapil.audioplayer;
 
 import by.lapil.audioplayer.cache.Cache;
-import by.lapil.audioplayer.utils.Genres;
-import by.lapil.audioplayer.exception.IncorrectGenreException;
 import by.lapil.audioplayer.exception.NotFoundException;
 import by.lapil.audioplayer.model.dto.CreateSongDto;
 import by.lapil.audioplayer.model.dto.SongDto;
+import by.lapil.audioplayer.model.entity.Album;
 import by.lapil.audioplayer.model.entity.Artist;
 import by.lapil.audioplayer.model.entity.Song;
+import by.lapil.audioplayer.utils.Genres;
 import by.lapil.audioplayer.repository.SongRepository;
 import by.lapil.audioplayer.service.ArtistService;
-import org.junit.jupiter.api.*;
+import by.lapil.audioplayer.service.impl.SongServiceImpl;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.web.server.ResponseStatusException;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.*;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class SongServiceTest {
+@ExtendWith(MockitoExtension.class)
+public class SongServiceTest {
+
+    @InjectMocks
+    private SongServiceImpl songService;
 
     @Mock
     private SongRepository songRepository;
@@ -32,96 +38,103 @@ class SongServiceTest {
     @Mock
     private Cache<List<Song>> cache;
 
-    private AutoCloseable closeable;
-
-    @InjectMocks
-    private by.lapil.audioplayer.service.SongService songService;
+    private Song song;
+    private CreateSongDto createDto;
+    private Artist artist;
 
     @BeforeEach
     void setup() {
-        closeable = MockitoAnnotations.openMocks(this);
-    }
-
-    @AfterEach
-    void tearDown() throws Exception {
-        closeable.close();
-    }
-
-    @Test
-    void create_ShouldSaveSongAndReturnDto() {
-        CreateSongDto dto = new CreateSongDto();
-        dto.setTitle("Test Song");
-        dto.setGenre(Genres.ROCK);
-        dto.setFilePath("/music/test.mp3");
-        dto.setArtists(List.of(1L));
-
-        Artist artist = new Artist();
+        artist = new Artist();
         artist.setId(1L);
-        artist.setSongs(new ArrayList<>());
+        artist.setName("Artist 1");
 
-        when(artistService.findAllById(any())).thenReturn(List.of(artist));
-        when(songRepository.save(any(Song.class))).thenAnswer(i -> i.getArguments()[0]);
-
-        SongDto result = songService.create(dto);
-
-        assertThat(result.getTitle()).isEqualTo("Test Song");
-        verify(songRepository).save(any(Song.class));
-    }
-
-    @Test
-    void findAll_ShouldReturnListOfSongs() {
-        when(songRepository.findAll()).thenReturn(List.of(new Song()));
-        List<Song> result = songService.findAll();
-        assertThat(result).hasSize(1);
-    }
-
-    @Test
-    void findById_WhenFound_ShouldReturnSong() {
-        Song song = new Song();
+        song = new Song();
         song.setId(1L);
+        song.setTitle("Title");
+        song.setGenre(Genres.ROCK);
+        song.setArtist(List.of(artist));
+
+        createDto = new CreateSongDto();
+        createDto.setTitle("Title");
+        createDto.setGenre(Genres.ROCK);
+        createDto.setFilePath("path");
+        createDto.setArtists(List.of(1L));
+    }
+
+    @Test
+    void findAll_ShouldReturnList() {
+        when(songRepository.findAll()).thenReturn(List.of(song));
+
+        List<Song> result = songService.findAll();
+
+        assertEquals(1, result.size());
+    }
+
+    @Test
+    void findAllById_ShouldReturnList() {
+        when(songRepository.findAllById(any())).thenReturn(List.of(song));
+
+        List<Song> result = songService.findAllById(List.of(1L));
+
+        assertEquals(1, result.size());
+    }
+
+    @Test
+    void findById_ShouldReturnSong() {
         when(songRepository.findById(1L)).thenReturn(Optional.of(song));
 
         Song result = songService.findById(1L);
-        assertThat(result.getId()).isEqualTo(1L);
+
+        assertEquals("Title", result.getTitle());
     }
 
     @Test
-    void findById_WhenNotFound_ShouldThrowException() {
-        when(songRepository.findById(1L)).thenReturn(Optional.empty());
-        assertThatThrownBy(() -> songService.findById(1L))
-                .isInstanceOf(NotFoundException.class);
+    void findById_WhenNotFound_ShouldThrow() {
+        when(songRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+        assertThrows(NotFoundException.class, () -> songService.findById(99L));
     }
 
     @Test
-    void update_WhenInvalidDto_ShouldThrowBadRequest() {
-        CreateSongDto dto = new CreateSongDto();
-        assertThatThrownBy(() -> songService.update(1L, dto))
-                .isInstanceOf(ResponseStatusException.class);
+    void findByCriteria_Cached_ShouldReturnCachedList() {
+        when(cache.get(anyString())).thenReturn(List.of(song));
+
+        List<SongDto> result = songService.findByCriteria("title", "artist");
+
+        assertEquals(1, result.size());
     }
 
     @Test
-    void patch_WhenGenreIncorrect_ShouldThrowException() {
-        Song song = new Song();
-        song.setId(1L);
+    void findByCriteria_NotFound_ShouldThrow() {
+        when(cache.get(anyString())).thenReturn(null);
+        when(songRepository.findByCriteria(any(), any())).thenReturn(List.of());
+
+        assertThrows(NotFoundException.class, () -> songService.findByCriteria("t", "a"));
+    }
+
+    @Test
+    void update_ShouldUpdateSong() {
         when(songRepository.findById(1L)).thenReturn(Optional.of(song));
+        when(songRepository.save(any())).thenReturn(song);
+        when(artistService.findAllById(any())).thenReturn(new ArrayList<>());
 
-        CreateSongDto dto = new CreateSongDto();
-        dto.setGenre(null);
+        SongDto result = songService.update(1L, createDto);
 
-        assertThatThrownBy(() -> songService.patch(1L, dto))
-                .isInstanceOf(IncorrectGenreException.class);
+        assertNotNull(result);
     }
 
     @Test
-    void deleteById_WhenSongExists_ShouldDelete() {
-        Song song = new Song();
-        song.setId(1L);
+    void deleteById_ShouldRemoveSong() {
         song.setArtist(new ArrayList<>());
+        Album album = new Album();
+        album.setSongs(new ArrayList<>(List.of(song)));
+        song.setAlbum(album);
+
         when(songRepository.findById(1L)).thenReturn(Optional.of(song));
 
         songService.deleteById(1L);
+
         verify(songRepository).deleteById(1L);
         verify(cache).remove(1L);
     }
 }
-

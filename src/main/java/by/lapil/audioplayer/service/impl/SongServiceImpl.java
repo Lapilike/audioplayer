@@ -190,11 +190,7 @@ public class SongServiceImpl implements SongService {
             song.setFilePath(createSongDto.getFilePath());
         }
         if (createSongDto.getGenre() != null) {
-            try {
-                song.setGenre(createSongDto.getGenre());
-            } catch (IllegalArgumentException e) {
-                throw new IncorrectGenreException("Incorrect genre: " + createSongDto.getGenre());
-            }
+            song.setGenre(createSongDto.getGenre());
         }
 
         return new SongDto(songRepository.save(song));
