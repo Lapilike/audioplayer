@@ -14,9 +14,7 @@ import jakarta.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @AllArgsConstructor
@@ -47,13 +45,14 @@ public class AlbumServiceImpl implements AlbumService {
         Artist artist = artistService.findById(createDto.getArtist());
         album.setSongs(songList);
         album.setArtist(artist);
-        final Album savedAlbum = albumRepository.save(album);
 
         artist.getAlbums().add(album);
         artistService.update(new ArrayList<>(List.of(artist)));
 
         songList.forEach(song -> song.setAlbum(album));
         songService.update(songList);
+
+        Album savedAlbum = albumRepository.save(album);
 
         return new AlbumDto(savedAlbum);
     }
@@ -66,20 +65,16 @@ public class AlbumServiceImpl implements AlbumService {
             album.setName(createDto.getName());
         }
         if (createDto.getArtist() != null) {
-            try {
-                Artist newArtist = artistService.findById(createDto.getArtist());
-                newArtist.getAlbums().add(album);
+            Artist newArtist = artistService.findById(createDto.getArtist());
+            newArtist.getAlbums().add(album);
 
-                Artist oldArtist = album.getArtist();
-                oldArtist.getAlbums().remove(album);
+            Artist oldArtist = album.getArtist();
+            oldArtist.getAlbums().remove(album);
 
-                album.setArtist(newArtist);
+            album.setArtist(newArtist);
 
-                artistService.update(List.of(oldArtist, newArtist));
-                album.setArtist(newArtist);
-            } catch (NotFoundException e) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-            }
+            artistService.update(List.of(oldArtist, newArtist));
+            album.setArtist(newArtist);
         }
         if (createDto.getSongs() != null) {
             List<Song> songList = songService.findAllById(createDto.getSongs());
@@ -100,8 +95,8 @@ public class AlbumServiceImpl implements AlbumService {
                 album.getSongs().addAll(newSongList);
             }
         }
-
-        return new AlbumDto(albumRepository.save(album));
+        Album savedAlbum = albumRepository.save(album);
+        return new AlbumDto(savedAlbum);
     }
 
     @Transactional

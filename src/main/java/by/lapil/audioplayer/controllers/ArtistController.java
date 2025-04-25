@@ -11,6 +11,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -57,13 +58,17 @@ public class ArtistController {
 
     @Operation(summary = "Обновить исполнителя по ID (полностью)")
     @PutMapping("/{id}")
-    public ArtistDto update(@PathVariable Long id, @Valid @RequestBody UpdateArtistDto updateArtistDto) {
+    public ArtistDto update(@PathVariable Long id,
+                            @Validated(UpdateArtistDto.Groups.OnUpdate.class)
+                            @RequestBody UpdateArtistDto updateArtistDto) {
         return artistService.update(id, updateArtistDto);
     }
 
     @Operation(summary = "Частично обновить исполнителя по ID")
     @PatchMapping("/{id}")
-    public ArtistDto patch(@PathVariable Long id, @Valid @RequestBody UpdateArtistDto updateArtistDto) {
+    public ArtistDto patch(@PathVariable Long id,
+                           @Validated(UpdateArtistDto.Groups.OnPatch.class)
+                           @RequestBody UpdateArtistDto updateArtistDto) {
         return artistService.patch(id, updateArtistDto);
     }
 

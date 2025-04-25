@@ -65,7 +65,7 @@ public class SongController {
 
     @Operation(summary = "Частично обновить песню по ID")
     @PatchMapping("/{id}")
-    public SongDto patch(@PathVariable Long id, @RequestBody @Valid CreateSongDto createSongDto) {
+    public SongDto patch(@PathVariable Long id, @RequestBody CreateSongDto createSongDto) {
         return songService.patch(id, createSongDto);
     }
 

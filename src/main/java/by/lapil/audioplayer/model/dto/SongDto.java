@@ -12,12 +12,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SongDto {
+    private Long id;
     private String title;
     private List<String> artists;
     private String album;
     private Genres genre;
     private String filePath;
-    private Long id;
 
     public SongDto(Song song) {
         this.title = song.getTitle();

@@ -13,9 +13,7 @@ import by.lapil.audioplayer.service.SongService;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class ArtistServiceImpl implements ArtistService {
@@ -50,6 +48,9 @@ public class ArtistServiceImpl implements ArtistService {
     @Override
     public List<ArtistDto> findByName(String name) {
         List<Artist> artistList = artistRepository.findByName(name);
+        if (artistList.isEmpty()) {
+            throw new NotFoundException(NotFoundException.ARTIST_NOT_FOUND);
+        }
         return artistList.stream().map(ArtistDto::new).toList();
     }
 
@@ -57,11 +58,10 @@ public class ArtistServiceImpl implements ArtistService {
     public ArtistDto update(Long id, UpdateArtistDto updateDto) {
         Artist artist = artistRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(NotFoundException.ARTIST_NOT_FOUND));
-        if (updateDto.getName() == null ||
-                updateDto.getSongIds() == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "All fields must be filled");
-        }
         artist.setName(updateDto.getName());
+        List<Song> songList = songService.findAllById(updateDto.getSongIds());
+        artist.setSongs(songList);
+        songList.forEach(song -> song.getArtist().add(artist));
         return new ArtistDto(artistRepository.save(artist));
     }
 
@@ -92,8 +92,8 @@ public class ArtistServiceImpl implements ArtistService {
     @Override
     public ArtistDto create(CreateArtistDto createArtistDto) {
         Artist artist = new Artist(createArtistDto);
-        artistRepository.save(artist);
-        return new ArtistDto(artist);
+        Artist savedArtist = artistRepository.save(artist);
+        return new ArtistDto(savedArtist);
     }
 
     @Transactional

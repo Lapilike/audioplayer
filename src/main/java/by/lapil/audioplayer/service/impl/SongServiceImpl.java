@@ -1,7 +1,6 @@
 package by.lapil.audioplayer.service.impl;
 
 import by.lapil.audioplayer.cache.Cache;
-import by.lapil.audioplayer.exception.IncorrectGenreException;
 import by.lapil.audioplayer.exception.NotFoundException;
 import by.lapil.audioplayer.model.dto.CreateSongDto;
 import by.lapil.audioplayer.model.dto.SongDto;
@@ -12,15 +11,14 @@ import by.lapil.audioplayer.repository.SongRepository;
 import by.lapil.audioplayer.service.ArtistService;
 import by.lapil.audioplayer.service.SongService;
 import jakarta.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @Primary
@@ -62,7 +60,11 @@ public class SongServiceImpl implements SongService {
     @Override
     public List<Song> findAllById(List<Long> ids) {
         logger.info("Finding all songs by ids");
-        return songRepository.findAllById(ids);
+        List<Song> songs = songRepository.findAllById(ids);
+        if (songs.isEmpty()) {
+            throw new NotFoundException(NotFoundException.SONG_NOT_FOUND);
+        }
+        return songs;
     }
 
     @Override
@@ -86,15 +88,8 @@ public class SongServiceImpl implements SongService {
             return songs.stream().map(SongDto::new).toList();
         }
 
-        if (title == null) {
-            title = "";
-        }
-        if (artistName == null) {
-            artistName = "";
-        }
-
         songs = songRepository.findByCriteria(artistName, title);
-        if (songs == null || songs.isEmpty()) {
+        if (songs.isEmpty()) {
             throw new NotFoundException(NotFoundException.SONG_NOT_FOUND);
         }
 
@@ -109,22 +104,12 @@ public class SongServiceImpl implements SongService {
 
     @Override
     public SongDto update(Long id, CreateSongDto createSongDto) {
-        if (createSongDto.getTitle() == null ||
-                createSongDto.getArtists() == null ||
-                createSongDto.getGenre() == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "All fields must be filled");
-        }
-
         Song song = songRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(NotFoundException.SONG_NOT_FOUND));
         song.setTitle(createSongDto.getTitle());
         addSongToArtist(createSongDto, song);
 
-        try {
-            song.setGenre(createSongDto.getGenre());
-        } catch (IllegalArgumentException e) {
-            throw new IncorrectGenreException("Incorrect genre: " + createSongDto.getGenre());
-        }
+        song.setGenre(createSongDto.getGenre());
 
         Set<String> cacheKeys = cache.getKeys(id);
         Song oldSong = songRepository.findById(id)
@@ -156,23 +141,22 @@ public class SongServiceImpl implements SongService {
     private void addSongToArtist(CreateSongDto createDto, Song song) {
         List<Artist> artistList = artistService.findAllById(createDto.getArtists());
 
-        if (!artistList.isEmpty()) {
-            List<Artist> newArtistList = artistService.findAllById(createDto.getArtists());
-            newArtistList.removeAll(song.getArtist());
-            if (!newArtistList.isEmpty()) {
-                song.getArtist().addAll(newArtistList);
-                newArtistList.forEach(artist -> artist.getSongs().add(song));
-                artistService.update(newArtistList);
-            }
+        List<Artist> songArtist = new ArrayList<>(song.getArtist());
+        List<Artist> newArtistList = artistService.findAllById(createDto.getArtists());
+        newArtistList.removeAll(songArtist);
+        if (!newArtistList.isEmpty()) {
+            song.getArtist().addAll(newArtistList);
+            newArtistList.forEach(artist -> artist.getSongs().add(song));
+            artistService.update(newArtistList);
+        }
 
-            List<Artist> removeArtistList = song.getArtist();
-            removeArtistList.removeAll(artistList);
-            if (!removeArtistList.isEmpty()) {
-                removeArtistList.forEach(artist -> artist.getSongs().remove(song));
-                artistService.update(removeArtistList);
+        List<Artist> removeArtistList = new ArrayList<>(song.getArtist());
+        removeArtistList.removeAll(artistList);
+        if (!removeArtistList.isEmpty()) {
+            removeArtistList.forEach(artist -> artist.getSongs().remove(song));
+            artistService.update(removeArtistList);
 
-                song.getArtist().removeAll(removeArtistList);
-            }
+            song.getArtist().removeAll(removeArtistList);
         }
     }
 
@@ -202,9 +186,7 @@ public class SongServiceImpl implements SongService {
         Song song = songRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(NotFoundException.SONG_NOT_FOUND));
         List<Artist> artistList = song.getArtist();
-        if (artistList != null && !artistList.isEmpty()) {
-            artistList.forEach(artist -> artist.getSongs().remove(song));
-        }
+        artistList.forEach(artist -> artist.getSongs().remove(song));
 
         Album album = song.getAlbum();
         if (album != null) {
