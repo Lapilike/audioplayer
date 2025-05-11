@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public class LogFileCreator {
-
     @Async
     public void createFile(String taskId, String from, String to,
                            ConcurrentHashMap<String, TaskStatus> taskStatusMap) {
