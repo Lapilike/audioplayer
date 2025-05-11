@@ -9,7 +9,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 public class LogFileCreator {
     @Async
     public void createFile(String taskId, String from, String to,
-                           ConcurrentHashMap<String, TaskStatus> taskStatusMap) throws InterruptedException {
+                           ConcurrentMap<String, TaskStatus> taskStatusMap) throws InterruptedException {
         try {
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 

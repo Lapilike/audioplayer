@@ -1,14 +1,27 @@
 package by.lapil.audioplayer;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.when;
+
 import by.lapil.audioplayer.cache.Cache;
-import by.lapil.audioplayer.exception.*;
+import by.lapil.audioplayer.exception.NotFoundException;
 import by.lapil.audioplayer.model.dto.CreateSongDto;
 import by.lapil.audioplayer.model.dto.SongDto;
-import by.lapil.audioplayer.model.entity.*;
-import by.lapil.audioplayer.utils.Genres;
+import by.lapil.audioplayer.model.entity.Album;
+import by.lapil.audioplayer.model.entity.Artist;
+import by.lapil.audioplayer.model.entity.Song;
 import by.lapil.audioplayer.repository.SongRepository;
 import by.lapil.audioplayer.service.ArtistService;
 import by.lapil.audioplayer.service.impl.SongServiceImpl;
+import by.lapil.audioplayer.utils.Genres;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -20,18 +33,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoInteractions;
-import static org.mockito.Mockito.when;
-
-public class SongServiceTest {
+class SongServiceTest {
 
     @Mock
     private SongRepository songRepository;
@@ -49,7 +51,7 @@ public class SongServiceTest {
     private Song song;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         MockitoAnnotations.openMocks(this);
 
         artist = new Artist();
@@ -156,12 +158,12 @@ public class SongServiceTest {
     }
 
     @Test
-    public void findByCriteria_ShouldThrowIfEmpty() {
+    void findByCriteria_ShouldThrowIfEmpty() {
         assertThrows(IllegalArgumentException.class, () -> songService.findByCriteria(null, null));
     }
 
     @Test
-    public void findById_ShouldReturnSong() {
+    void findById_ShouldReturnSong() {
         when(songRepository.findById(1L)).thenReturn(Optional.of(song));
 
         Song result = songService.findById(1L);
@@ -170,7 +172,7 @@ public class SongServiceTest {
     }
 
     @Test
-    public void findById_ShouldThrowNotFound() {
+    void findById_ShouldThrowNotFound() {
         when(songRepository.findById(anyLong())).thenReturn(Optional.empty());
 
         assertThrows(NotFoundException.class, () -> songService.findById(99L));
@@ -354,28 +356,28 @@ public class SongServiceTest {
     }
 
     @Test
-    public void findAll_ShouldReturnList() {
+    void findAll_ShouldReturnList() {
         when(songRepository.findAll()).thenReturn(List.of(song));
         List<Song> result = songService.findAll();
         assertEquals(1, result.size());
     }
 
     @Test
-    public void findAllById_ShouldReturnList() {
+    void findAllById_ShouldReturnList() {
         when(songRepository.findAllById(List.of(1L))).thenReturn(List.of(song));
         List<Song> result = songService.findAllById(List.of(1L));
         assertEquals(1, result.size());
     }
 
     @Test
-    public void findAllById_ShouldThrowNotFound() {
+    void findAllById_ShouldThrowNotFound() {
         assertThatThrownBy(() -> songService.findAllById(List.of(1L)))
                 .isInstanceOf(NotFoundException.class)
                 .hasMessageContaining(NotFoundException.SONG_NOT_FOUND);
     }
 
     @Test
-    public void deleteById_ShouldRemoveSong() {
+    void deleteById_ShouldRemoveSong() {
         when(songRepository.findById(1L)).thenReturn(Optional.of(song));
 
         songService.deleteById(1L);
@@ -385,7 +387,7 @@ public class SongServiceTest {
     }
 
     @Test
-    public void deleteById_ShouldRemoveSongWithoutAlbum() {
+    void deleteById_ShouldRemoveSongWithoutAlbum() {
         Album album = new Album();
         album.setName("Album");
         album.setSongs(new ArrayList<>(List.of(song)));

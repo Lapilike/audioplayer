@@ -1,5 +1,15 @@
 package by.lapil.audioplayer;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import by.lapil.audioplayer.exception.NotFoundException;
 import by.lapil.audioplayer.model.dto.AlbumDto;
 import by.lapil.audioplayer.model.dto.CreateAlbumDto;
@@ -11,27 +21,17 @@ import by.lapil.audioplayer.service.ArtistService;
 import by.lapil.audioplayer.service.SongService;
 import by.lapil.audioplayer.service.impl.AlbumServiceImpl;
 import by.lapil.audioplayer.utils.Genres;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-public class AlbumServiceTest {
+class AlbumServiceTest {
     @Mock
     private AlbumRepository albumRepository;
 
@@ -48,7 +48,7 @@ public class AlbumServiceTest {
     private Song song;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         MockitoAnnotations.openMocks(this);
 
         album = new Album();

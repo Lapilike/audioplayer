@@ -22,13 +22,16 @@ import org.springframework.web.server.ResponseStatusException;
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
+    private static final String TIMESTAMP = "timestamp";
+    private static final String STATUS = "status";
     private static final String ERROR = "error";
     private static final String MESSAGE = "message";
+    private static final String PATH = "path";
 
     private Map<String, Object> createBadRequestResponse(String message) {
         Map<String, Object> body = new HashMap<>();
-        body.put("timestamp", LocalDateTime.now());
-        body.put("status", HttpStatus.BAD_REQUEST.value());
+        body.put(TIMESTAMP, LocalDateTime.now());
+        body.put(STATUS, HttpStatus.BAD_REQUEST.value());
         body.put(ERROR, "Ошибка чтения тела запроса");
         body.put(MESSAGE, message);
 
@@ -99,11 +102,11 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, Object>> handleResponseStatus(ResponseStatusException ex,
                                                                     HttpServletRequest request) {
         Map<String, Object> body = new HashMap<>();
-        body.put("timestamp", LocalDateTime.now());
-        body.put("status", ex.getStatusCode().value());
+        body.put(TIMESTAMP, LocalDateTime.now());
+        body.put(STATUS, ex.getStatusCode().value());
         body.put(ERROR, ex.getStatusCode());
         body.put(MESSAGE, ex.getReason());
-        body.put("path", request.getRequestURI());
+        body.put(PATH, request.getRequestURI());
 
         return new ResponseEntity<>(body, ex.getStatusCode());
     }
@@ -112,11 +115,11 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, Object>> handleNotFound(NotFoundException ex,
                                                               HttpServletRequest request) {
         Map<String, Object> body = new HashMap<>();
-        body.put("timestamp", LocalDateTime.now());
-        body.put("status", HttpStatus.NOT_FOUND.value());
+        body.put(TIMESTAMP, LocalDateTime.now());
+        body.put(STATUS, HttpStatus.NOT_FOUND.value());
         body.put(ERROR, HttpStatus.NOT_FOUND.value());
         body.put(MESSAGE, ex.getMessage());
-        body.put("path", request.getRequestURI());
+        body.put(PATH, request.getRequestURI());
 
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
     }
