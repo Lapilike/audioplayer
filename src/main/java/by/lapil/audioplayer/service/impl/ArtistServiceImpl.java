@@ -12,8 +12,6 @@ import by.lapil.audioplayer.service.ArtistService;
 import by.lapil.audioplayer.service.SongService;
 import jakarta.transaction.Transactional;
 import java.util.List;
-
-import static java.util.Arrays.stream;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 

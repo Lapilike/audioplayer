@@ -1,5 +1,8 @@
 package by.lapil.audioplayer.service.impl;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+
 import by.lapil.audioplayer.model.Status;
 import by.lapil.audioplayer.model.TaskStatus;
 import by.lapil.audioplayer.service.LogService;
@@ -18,8 +21,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
