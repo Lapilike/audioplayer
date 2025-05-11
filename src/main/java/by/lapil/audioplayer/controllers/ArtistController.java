@@ -56,6 +56,12 @@ public class ArtistController {
         return artistService.create(createArtistDto);
     }
 
+    @Operation(summary = "Создать несколько новых исполнителя")
+    @PostMapping("/bulk")
+    public List<ArtistDto> createBulk(@RequestBody @Valid List<CreateArtistDto> createArtistDto) {
+        return artistService.createBulk(createArtistDto);
+    }
+
     @Operation(summary = "Обновить исполнителя по ID (полностью)")
     @PutMapping("/{id}")
     public ArtistDto update(@PathVariable Long id,

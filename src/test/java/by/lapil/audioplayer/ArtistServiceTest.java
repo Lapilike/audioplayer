@@ -17,8 +17,10 @@ import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.mockito.ArgumentMatchers.anyList;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.times;
 import org.mockito.MockitoAnnotations;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
@@ -268,6 +270,32 @@ public class ArtistServiceTest {
 
         assertNotNull(result);
         assertEquals(createDto.getName(), result.getName());
+    }
+
+    @Test
+    void testCreateBulk_shouldCreateArtistsAndReturnDtos() {
+        // given
+        CreateArtistDto dto1 = new CreateArtistDto("Artist 1");
+        CreateArtistDto dto2 = new CreateArtistDto("Artist 2");
+        List<CreateArtistDto> createList = List.of(dto1, dto2);
+
+        Artist artist1 = new Artist(dto1);
+        artist1.setId(1L);
+        Artist artist2 = new Artist(dto2);
+        artist2.setId(2L);
+        List<Artist> savedArtists = List.of(artist1, artist2);
+
+        when(artistRepository.saveAll(anyList())).thenReturn(savedArtists);
+
+        // when
+        List<ArtistDto> result = artistService.createBulk(createList);
+
+        // then
+        assertEquals(2, result.size());
+        assertEquals("Artist 1", result.get(0).getName());
+        assertEquals("Artist 2", result.get(1).getName());
+
+        verify(artistRepository, times(1)).saveAll(anyList());
     }
 
     @Test

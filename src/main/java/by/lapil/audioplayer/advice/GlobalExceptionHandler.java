@@ -1,5 +1,6 @@
 package by.lapil.audioplayer.advice;
 
+import by.lapil.audioplayer.exception.NotFoundException;
 import by.lapil.audioplayer.exception.ValidationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
@@ -24,8 +25,18 @@ public class GlobalExceptionHandler {
     private static final String ERROR = "error";
     private static final String MESSAGE = "message";
 
+    private Map<String, Object> createBadRequestResponse(String message) {
+        Map<String, Object> body = new HashMap<>();
+        body.put("timestamp", LocalDateTime.now());
+        body.put("status", HttpStatus.BAD_REQUEST.value());
+        body.put(ERROR, "Ошибка чтения тела запроса");
+        body.put(MESSAGE, message);
+
+        return body;
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<?> handleValidationErrors(MethodArgumentNotValidException ex) {
+    public ResponseEntity<Map<String, String>> handleValidationErrors(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getFieldErrors().forEach(field ->
                 errors.put(field.getField(), field.getDefaultMessage())
@@ -35,17 +46,13 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ValidationException.class)
-    public ResponseEntity<Map<String, String>> handleCustomValidation(ValidationException ex) {
-        return ResponseEntity.badRequest().body(Map.of(ERROR, ex.getMessage()));
+    public ResponseEntity<Map<String, Object>> handleCustomValidation(ValidationException ex) {
+        return new ResponseEntity<>(createBadRequestResponse(ex.getMessage()), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<Map<String, Object>> handleInvalidJson(HttpMessageNotReadableException ex) {
-        Map<String, Object> body = new HashMap<>();
-        body.put("timestamp", LocalDateTime.now());
-        body.put("status", HttpStatus.BAD_REQUEST.value());
-        body.put(ERROR, "Ошибка чтения тела запроса");
-        body.put(MESSAGE, ex.getMessage());
+        Map<String, Object> body = createBadRequestResponse(ex.getMessage());
 
         Throwable cause = ex.getCause();
         if (cause instanceof InvalidFormatException ife) {
@@ -99,5 +106,17 @@ public class GlobalExceptionHandler {
         body.put("path", request.getRequestURI());
 
         return new ResponseEntity<>(body, ex.getStatusCode());
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleNotFound(NotFoundException ex, HttpServletRequest request) {
+        Map<String, Object> body = new HashMap<>();
+        body.put("timestamp", LocalDateTime.now());
+        body.put("status", HttpStatus.NOT_FOUND.value());
+        body.put(ERROR, HttpStatus.NOT_FOUND.value());
+        body.put(MESSAGE, ex.getMessage());
+        body.put("path", request.getRequestURI());
+
+        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
     }
 }

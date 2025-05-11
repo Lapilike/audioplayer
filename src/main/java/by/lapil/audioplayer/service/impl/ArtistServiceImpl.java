@@ -12,6 +12,8 @@ import by.lapil.audioplayer.service.ArtistService;
 import by.lapil.audioplayer.service.SongService;
 import jakarta.transaction.Transactional;
 import java.util.List;
+
+import static java.util.Arrays.stream;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
@@ -94,6 +96,14 @@ public class ArtistServiceImpl implements ArtistService {
         Artist artist = new Artist(createArtistDto);
         Artist savedArtist = artistRepository.save(artist);
         return new ArtistDto(savedArtist);
+    }
+
+    @Override
+    public List<ArtistDto> createBulk(List<CreateArtistDto> createArtistDto) {
+        List<Artist> artistList = createArtistDto.stream()
+                .map(Artist::new).toList();
+        List<Artist> createdArtists = artistRepository.saveAll(artistList);
+        return createdArtists.stream().map(ArtistDto::new).toList();
     }
 
     @Transactional

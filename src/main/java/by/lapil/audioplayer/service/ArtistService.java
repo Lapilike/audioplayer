@@ -25,5 +25,7 @@ public interface ArtistService {
 
     ArtistDto create(CreateArtistDto createArtistDto);
 
+    List<ArtistDto> createBulk(List<CreateArtistDto> createArtistDto);
+
     void deleteById(Long id);
 }
