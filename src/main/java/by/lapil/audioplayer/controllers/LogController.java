@@ -40,7 +40,12 @@ public class LogController {
     @PostMapping("/generate")
     public ResponseEntity<String> generateLog(@RequestParam(required = false) String from,
                                               @RequestParam(required = false) String to) {
-        String taskId = logService.generateLogFile(from, to);
+        String taskId;
+        try {
+            taskId = logService.generateLogFile(from, to);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         return ResponseEntity.ok(taskId);
     }
 

@@ -23,8 +23,8 @@ public class LogFileCreator {
         try {
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-            Path customTempDir = Files.createTempDirectory("my-temp-dir");
-            Path tempLogFile = Files.createTempFile(customTempDir, "log-temp-" + taskId, ".log");
+            Path secureDir = Paths.get(System.getProperty("java.io.tmpdir"));
+            Path tempLogFile = Files.createTempFile(secureDir, "log-temp-" + taskId, ".log");
             Files.writeString(tempLogFile, "Logs...");
             LocalDate fromDate = LocalDate.parse(from, dateFormatter);
             LocalDate toDate = LocalDate.parse(to, dateFormatter);

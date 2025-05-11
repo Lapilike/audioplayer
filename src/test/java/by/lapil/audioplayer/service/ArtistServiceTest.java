@@ -1,4 +1,4 @@
-package by.lapil.audioplayer;
+package by.lapil.audioplayer.service;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -20,8 +20,6 @@ import by.lapil.audioplayer.model.entity.Album;
 import by.lapil.audioplayer.model.entity.Artist;
 import by.lapil.audioplayer.model.entity.Song;
 import by.lapil.audioplayer.repository.ArtistRepository;
-import by.lapil.audioplayer.service.AlbumService;
-import by.lapil.audioplayer.service.SongService;
 import by.lapil.audioplayer.service.impl.ArtistServiceImpl;
 import by.lapil.audioplayer.utils.Genres;
 import java.util.ArrayList;

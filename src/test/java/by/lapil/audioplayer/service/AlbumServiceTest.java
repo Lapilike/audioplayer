@@ -1,4 +1,4 @@
-package by.lapil.audioplayer;
+package by.lapil.audioplayer.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -17,8 +17,6 @@ import by.lapil.audioplayer.model.entity.Album;
 import by.lapil.audioplayer.model.entity.Artist;
 import by.lapil.audioplayer.model.entity.Song;
 import by.lapil.audioplayer.repository.AlbumRepository;
-import by.lapil.audioplayer.service.ArtistService;
-import by.lapil.audioplayer.service.SongService;
 import by.lapil.audioplayer.service.impl.AlbumServiceImpl;
 import by.lapil.audioplayer.utils.Genres;
 import java.util.ArrayList;

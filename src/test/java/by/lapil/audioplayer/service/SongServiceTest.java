@@ -1,4 +1,4 @@
-package by.lapil.audioplayer;
+package by.lapil.audioplayer.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
@@ -19,7 +19,6 @@ import by.lapil.audioplayer.model.entity.Album;
 import by.lapil.audioplayer.model.entity.Artist;
 import by.lapil.audioplayer.model.entity.Song;
 import by.lapil.audioplayer.repository.SongRepository;
-import by.lapil.audioplayer.service.ArtistService;
 import by.lapil.audioplayer.service.impl.SongServiceImpl;
 import by.lapil.audioplayer.utils.Genres;
 import java.util.ArrayList;
@@ -80,10 +79,6 @@ class SongServiceTest {
         createDto.setFilePath("/music/test.mp3");
         List<Long> artistIds = List.of(1L);
         createDto.setArtists(artistIds);
-
-        Artist artist = new Artist();
-        artist.setName("Test Artist");
-        artist.setSongs(new ArrayList<>());
 
         when(artistService.findAllById(artistIds)).thenReturn(List.of(artist));
         when(songRepository.save(any(Song.class))).thenAnswer(invocation -> invocation.getArgument(0));
@@ -147,12 +142,12 @@ class SongServiceTest {
     @Test
     void findByCriteria_ShouldThrowIfNoSongsFound() {
         String title = "None";
-        String artist = "Unknown";
+        String unknownArtist = "Unknown";
 
-        when(cache.get(title + "-" + artist)).thenReturn(null);
-        when(songRepository.findByCriteria(artist, title)).thenReturn(List.of());
+        when(cache.get(title + "-" + unknownArtist)).thenReturn(null);
+        when(songRepository.findByCriteria(unknownArtist, title)).thenReturn(List.of());
 
-        assertThatThrownBy(() -> songService.findByCriteria(title, artist))
+        assertThatThrownBy(() -> songService.findByCriteria(title, unknownArtist))
                 .isInstanceOf(NotFoundException.class)
                 .hasMessageContaining("Song not found");
     }
