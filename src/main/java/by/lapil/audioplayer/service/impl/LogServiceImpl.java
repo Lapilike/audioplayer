@@ -13,6 +13,7 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -53,7 +54,7 @@ public class LogServiceImpl implements LogService {
                                     String timePart = line.substring(11, 16);
                                     LocalTime logTime = LocalTime.parse(timePart, TIME_FORMATTER);
                                     return !logTime.isBefore(fromTime) && !logTime.isAfter(toTime);
-                                } catch (Exception e) {
+                                } catch (DateTimeParseException e) {
                                     return false;
                                 }
                             })
