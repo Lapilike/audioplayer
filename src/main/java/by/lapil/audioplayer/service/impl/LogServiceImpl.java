@@ -21,7 +21,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-
 @Service
 @RequiredArgsConstructor
 public class LogServiceImpl implements LogService {

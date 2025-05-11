@@ -6,7 +6,6 @@ import by.lapil.audioplayer.model.TaskStatus;
 import by.lapil.audioplayer.service.LogService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -53,7 +52,7 @@ public class LogController {
     }
 
     @GetMapping("/file/{id}")
-    public ResponseEntity<Resource> getFile(@PathVariable String id) throws IOException {
+    public ResponseEntity<Resource> getFile(@PathVariable String id) {
         TaskStatus status = logService.getStatus(id);
         if (status.getStatus() != Status.DONE || status.getFilePath() == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
