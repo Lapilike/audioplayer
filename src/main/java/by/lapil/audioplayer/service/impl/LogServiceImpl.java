@@ -70,7 +70,7 @@ public class LogServiceImpl implements LogService {
     }
 
     @Override
-    public String generateLogFile(String from, String to) {
+    public String generateLogFile(String from, String to) throws InterruptedException {
         String taskId = UUID.randomUUID().toString();
         TaskStatus logTask = new TaskStatus(Status.PENDING, null);
         taskStatusMap.put(taskId, logTask);

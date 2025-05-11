@@ -19,11 +19,12 @@ import org.springframework.stereotype.Component;
 public class LogFileCreator {
     @Async
     public void createFile(String taskId, String from, String to,
-                           ConcurrentHashMap<String, TaskStatus> taskStatusMap) {
+                           ConcurrentHashMap<String, TaskStatus> taskStatusMap) throws InterruptedException {
         try {
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-            Path tempLogFile = Files.createTempFile("log-temp-" + taskId, ".log");
+            Path customTempDir = Files.createTempDirectory("my-temp-dir");
+            Path tempLogFile = Files.createTempFile(customTempDir, "log-temp-" + taskId, ".log");
             Files.writeString(tempLogFile, "Logs...");
             LocalDate fromDate = LocalDate.parse(from, dateFormatter);
             LocalDate toDate = LocalDate.parse(to, dateFormatter);
@@ -52,6 +53,8 @@ public class LogFileCreator {
             taskStatusMap.put(taskId, new TaskStatus(Status.DONE, tempLogFile));
         } catch (NotFoundException e) {
             taskStatusMap.put(taskId, new TaskStatus(Status.NOT_FOUND, null));
+        } catch (InterruptedException e) {
+            throw e;
         } catch (Exception e) {
             taskStatusMap.put(taskId, new TaskStatus(Status.ERROR, null));
         }

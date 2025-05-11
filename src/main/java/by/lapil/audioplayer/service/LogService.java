@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 public interface LogService {
     List<String> getLogsByDate(String date, String from, String to);
 
-    String generateLogFile(String from, String to);
+    String generateLogFile(String from, String to) throws InterruptedException;
 
     TaskStatus getStatus(String taskId);
 }
