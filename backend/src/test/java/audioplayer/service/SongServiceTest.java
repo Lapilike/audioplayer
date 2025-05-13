@@ -25,7 +25,6 @@ import audioplayer.repository.SongRepository;
 import audioplayer.service.impl.SongServiceImpl;
 import audioplayer.utils.Genres;
 import audioplayer.utils.SongsProperties;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -60,8 +59,6 @@ class SongServiceTest {
 
     private Artist artist;
     private Song song;
-
-    Path resourceDir;
 
     @BeforeEach
     void setUp() {

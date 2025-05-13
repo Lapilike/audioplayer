@@ -12,17 +12,17 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public class LoggingAspect {
-    @Before("execution(* v2.service.*(..))")
+    @Before("execution(* audioplayer.service.*(..))")
     public void logBefore(JoinPoint joinPoint) {
         log.info("[BEFORE] Вызов метода: {} с аргументами {}", joinPoint.getSignature(), joinPoint.getArgs());
     }
 
-    @AfterReturning(value = "execution(* v2.service..*(..))", returning = "result")
+    @AfterReturning(value = "execution(* audioplayer.service..*(..))", returning = "result")
     public void logAfterReturning(JoinPoint joinPoint, Object result) {
         log.info("[AFTER] Метод: {} выполнен. Возвращено: {}", joinPoint.getSignature(), result);
     }
 
-    @AfterThrowing(value = "execution(* v2.service..*(..))", throwing = "exception")
+    @AfterThrowing(value = "execution(* audioplayer.service..*(..))", throwing = "exception")
     public void logException(JoinPoint joinPoint, Throwable exception) {
         log.error("[ERROR] Метод: {} вызвал исключение: {}",
                 joinPoint.getSignature(), exception.getMessage());
