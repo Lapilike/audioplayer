@@ -31,7 +31,7 @@ class VisitCounterServiceTest {
         String url = "https://unknown.com";
         int count = visitCounterService.getCount(url);
 
-        assertThat(count).isEqualTo(0);
+        assertThat(count).isZero();
     }
 
     @Test
@@ -42,9 +42,10 @@ class VisitCounterServiceTest {
 
         Map<String, Integer> counts = visitCounterService.getAllCounts();
 
-        assertThat(counts).hasSize(2);
-        assertThat(counts).containsEntry("https://example.com", 2);
-        assertThat(counts).containsEntry("https://test.com", 1);
+        assertThat(counts)
+                .hasSize(2)
+                .containsEntry("https://example.com", 2)
+                .containsEntry("https://test.com", 1);
     }
 
     @Test
@@ -58,8 +59,8 @@ class VisitCounterServiceTest {
 
         visitCounterService.resetAllCounts();
 
-        assertThat(visitCounterService.getCount(url1)).isEqualTo(0);
-        assertThat(visitCounterService.getCount(url2)).isEqualTo(0);
+        assertThat(visitCounterService.getCount(url1)).isZero();
+        assertThat(visitCounterService.getCount(url2)).isZero();
         assertThat(visitCounterService.getAllCounts()).isEmpty();
     }
 
