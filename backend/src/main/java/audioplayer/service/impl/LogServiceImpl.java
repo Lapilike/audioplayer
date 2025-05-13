@@ -71,11 +71,16 @@ public class LogServiceImpl implements LogService {
     }
 
     @Override
-    public String generateLogFile(String from, String to) throws InterruptedException {
+    public String generateLogFile(String from, String to) {
         String taskId = UUID.randomUUID().toString();
         TaskStatus logTask = new TaskStatus(Status.PENDING, null);
         taskStatusMap.put(taskId, logTask);
-        logFileCreator.createFile(taskId, from, to, taskStatusMap);
+        try {
+            logFileCreator.createFile(taskId, from, to, taskStatusMap);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new RuntimeException(e);
+        }
         return taskId;
     }
 

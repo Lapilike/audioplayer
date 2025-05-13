@@ -41,11 +41,7 @@ public class LogController {
     public ResponseEntity<String> generateLog(@RequestParam(required = false) String from,
                                               @RequestParam(required = false) String to) {
         String taskId;
-        try {
-            taskId = logService.generateLogFile(from, to);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        taskId = logService.generateLogFile(from, to);
         return ResponseEntity.ok(taskId);
     }
 
