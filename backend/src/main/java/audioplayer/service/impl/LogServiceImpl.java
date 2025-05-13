@@ -79,7 +79,6 @@ public class LogServiceImpl implements LogService {
             logFileCreator.createFile(taskId, from, to, taskStatusMap);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            throw new RuntimeException(e);
         }
         return taskId;
     }
