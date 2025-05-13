@@ -11,10 +11,11 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
         </processorPath>
         <module name="backend" />
+        <module name="audioplayer" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="audioplayer" target="17" />
+      <module name="backend" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
