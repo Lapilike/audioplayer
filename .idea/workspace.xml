@@ -393,7 +393,7 @@
       <workItem from="1748303915290" duration="2892000" />
       <workItem from="1748307150362" duration="148000" />
       <workItem from="1748307305737" duration="273000" />
-      <workItem from="1748307588253" duration="7056000" />
+      <workItem from="1748307588253" duration="7779000" />
     </task>
     <task id="LOCAL-00042" summary="Added albumService, AlbumController, AlbumRepository&#10;added DTOs for album entity&#10;code fixes">
       <option name="closed" value="true" />

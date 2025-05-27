@@ -41,6 +41,7 @@ export default function HomePage() {
                 setError('Ошибка загрузки данных', err.toString());
                 setLoading(true);
             });
+        console.log("loaded playlists - ", playlists);
     };
 
     const handleDelete = (playlist) => {
@@ -70,7 +71,7 @@ export default function HomePage() {
                     playlists={playlists}
                     loading={loading}
                     error={error}
-                    playlistAdded={() => loadPlaylist().catch(console.error)}
+                    playlistAdded={() => loadPlaylist()}
                     onClick={setPlaylistSongs}
                     onDeleteClick={handleDelete}
                 />
