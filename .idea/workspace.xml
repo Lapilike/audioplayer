@@ -167,7 +167,6 @@
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
     "extract.method.default.visibility": "private",
-    "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
     "last_directory_selection": "C:/Users/lapil/IdeaProjects/audioplayer/backend/src/main/java/by/lapil/audioplayer",
     "last_opened_file_path": "C:/Users/lapil/IdeaProjects/audioplayer/backend",
@@ -394,7 +393,7 @@
       <workItem from="1748303915290" duration="2892000" />
       <workItem from="1748307150362" duration="148000" />
       <workItem from="1748307305737" duration="273000" />
-      <workItem from="1748307588253" duration="5191000" />
+      <workItem from="1748307588253" duration="7056000" />
     </task>
     <task id="LOCAL-00042" summary="Added albumService, AlbumController, AlbumRepository&#10;added DTOs for album entity&#10;code fixes">
       <option name="closed" value="true" />
