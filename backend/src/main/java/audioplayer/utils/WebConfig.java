@@ -15,7 +15,7 @@ public class WebConfig {
             @Override
             public void addCorsMappings(@NonNull CorsRegistry registry) {
                 registry.addMapping("/api/v1/**")  // подставь свои пути API
-                        .allowedOrigins("https://audioplayer-1.onrender.com")
+                        .allowedOrigins("https://audioplayer-1.onrender.com", "https://audioplayer-fnqf.onrender.com")
                         .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
                         .allowCredentials(true);
             }
