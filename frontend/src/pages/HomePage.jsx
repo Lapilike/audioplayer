@@ -19,7 +19,9 @@ export default function HomePage() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        axios.get('api/v1/music')
+        axios.get('https://audioplayer-backend.onrender.com/api/v1/music', {
+            withCredentials: true
+        })
             .then(response => {
                 console.log('Запрос отправлен на:', response.config.url);
                 setSongs(response.data);  // Присваиваем полученные данные в состояние
@@ -32,7 +34,9 @@ export default function HomePage() {
     }, []);
 
     const loadPlaylist = async () => {
-        axios.get('api/v1/playlist')
+        axios.get('https://audioplayer-backend.onrender.com/api/v1/playlist', {
+            withCredentials: true
+        })
             .then(response => {
                 setPlaylists(response.data);  // Присваиваем полученные данные в состояние
                 setLoading(false);         // Завершаем процесс загрузки

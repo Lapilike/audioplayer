@@ -17,6 +17,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -36,6 +37,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SongController {
     SongService songService;
     private final Path rootLocation = Paths.get("backend/files");
+    @CrossOrigin(origins = {"http://localhost:3000", "http://localhost:4200"})
 
     @GetMapping("/file/{filename:.+}")
     public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
