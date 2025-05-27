@@ -13,8 +13,8 @@ public class WebConfig implements WebMvcConfigurer {
                         "http://localhost:4200",
                         "https://audioplayer-iovo.onrender.com",
                         "http://localhost:3000")
-                .allowedMethods("*")
+                .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE")
                 .allowedHeaders("*")
-                .allowCredentials(true);
+                .allowCredentials(false);
     }
 }
