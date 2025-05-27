@@ -1,6 +1,7 @@
 package audioplayer.model.dto;
 
 import audioplayer.model.entity.Artist;
+import audioplayer.model.entity.Playlist;
 import audioplayer.model.entity.Song;
 import audioplayer.utils.Genres;
 import java.util.List;
@@ -15,7 +16,7 @@ public class SongDto {
     private Long id;
     private String title;
     private List<String> artists;
-    private String album;
+    private List<String> playlist;
     private Genres genre;
     private String filePath;
 
@@ -25,8 +26,8 @@ public class SongDto {
         if (artistSet != null) {
             this.artists = artistSet.stream().map(Artist::getName).toList();
         }
-        if (song.getAlbum() != null) {
-            this.album = song.getAlbum().getName();
+        if (song.getPlaylists() != null) {
+            this.playlist = song.getPlaylists().stream().map(Playlist::getName).toList();
         }
         this.genre = song.getGenre();
         this.filePath = song.getFilePath();

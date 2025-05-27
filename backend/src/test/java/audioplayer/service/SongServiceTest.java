@@ -18,7 +18,7 @@ import audioplayer.exception.NotFoundException;
 import audioplayer.model.dto.ArtistDto;
 import audioplayer.model.dto.CreateSongDto;
 import audioplayer.model.dto.SongDto;
-import audioplayer.model.entity.Album;
+import audioplayer.model.entity.Playlist;
 import audioplayer.model.entity.Artist;
 import audioplayer.model.entity.Song;
 import audioplayer.repository.SongRepository;
@@ -394,10 +394,10 @@ class SongServiceTest {
 
     @Test
     void deleteById_ShouldRemoveSongWithoutAlbum() {
-        Album album = new Album();
-        album.setName("Album");
-        album.setSongs(new ArrayList<>(List.of(song)));
-        song.setAlbum(album);
+        Playlist playlist = new Playlist();
+        playlist.setName("Album");
+        playlist.setSongs(new ArrayList<>(List.of(song)));
+        song.getPlaylists().add(playlist);
 
         when(songRepository.findById(1L)).thenReturn(Optional.of(song));
 
@@ -405,7 +405,7 @@ class SongServiceTest {
 
         verify(songRepository).deleteById(1L);
         verify(cache).remove(1L);
-        assertThat(album.getSongs()).isEmpty();
+        assertThat(playlist.getSongs()).isEmpty();
     }
 
     @Test

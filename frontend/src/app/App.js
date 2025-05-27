@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from "../components/Navbar";
 import HomePage from "../pages/HomePage";
-import {ThemeProvider} from "@mui/material";
-import {darkTheme} from "../themes/theme";
 import AdminPage from "../pages/AdminPage";
+import Layout from "../layout/Layout";
+import PlaylistPage from "../pages/PlaylistPage";
 
 function App() {
-
-  useEffect(() => {
+    useEffect(() => {
     console.log('Компонент загрузился');
   }, []);
 
@@ -17,11 +15,13 @@ function App() {
       <div>
 
           <Router>
-                  <Navbar/>
-                  <Routes>
-                      <Route path={"/"} element={<HomePage/>} />
-                      <Route path={"/admin"} element={<AdminPage/>} />
-                  </Routes>
+              <Routes>
+                  <Route path="/" element={<Layout />}>
+                      <Route index element={<HomePage />} />
+                      <Route path="playlist" element={<PlaylistPage />}/>
+                      <Route path="admin" element={<AdminPage />} />
+                  </Route>
+              </Routes>
           </Router>
 
       </div>

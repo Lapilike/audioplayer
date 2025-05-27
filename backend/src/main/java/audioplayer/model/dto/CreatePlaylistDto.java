@@ -10,13 +10,14 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateAlbumDto {
-    @NotBlank(message = "Album name must be provided")
-    @NotNull(message = "Album name must be provided")
+public class CreatePlaylistDto {
+    @NotBlank(message = "Album name must be provided", groups = {UpdateArtistDto.Groups.OnUpdate.class})
+    @NotNull(message = "Album name must be provided", groups = {UpdateArtistDto.Groups.OnUpdate.class})
     String name;
 
-    @NotNull(message = "Artist must be provided")
-    Long artist;
-
     List<Long> songs;
+
+    public static class Groups {
+        public interface OnPatch {}
+    }
 }

@@ -16,7 +16,7 @@ import audioplayer.exception.NotFoundException;
 import audioplayer.model.dto.ArtistDto;
 import audioplayer.model.dto.CreateArtistDto;
 import audioplayer.model.dto.UpdateArtistDto;
-import audioplayer.model.entity.Album;
+import audioplayer.model.entity.Playlist;
 import audioplayer.model.entity.Artist;
 import audioplayer.model.entity.Song;
 import audioplayer.repository.ArtistRepository;
@@ -39,7 +39,7 @@ class ArtistServiceTest {
     private SongService songService;
 
     @Mock
-    private AlbumService albumService;
+    private PlaylistService playlistService;
 
     @InjectMocks
     private ArtistServiceImpl artistService;
@@ -324,23 +324,20 @@ class ArtistServiceTest {
 
     @Test
     void deleteById_shouldDeleteAlbumsAndSongs() {
-        Album album = new Album();
-        album.setId(1L);
-        artist.setAlbums(new ArrayList<>(List.of(album)));
+        Playlist playlist = new Playlist();
+        playlist.setId(1L);
 
         when(artistRepository.findById(1L)).thenReturn(Optional.of(artist));
 
         artistService.deleteById(1L);
 
-        verify(albumService).delete(album.getId());
+        verify(playlistService).delete(playlist.getId());
         verify(songService).deleteById(song.getId());
         verify(artistRepository).delete(artist);
     }
 
     @Test
     void deleteById_shouldNotDeleteSongs_whenSongHasMultipleArtists() {
-        artist.setAlbums(new ArrayList<>());
-
         Artist artist1 = new Artist();
         artist1.setId(1L);
         artist1.setName("Artist 1");
@@ -357,15 +354,13 @@ class ArtistServiceTest {
 
     @Test
     void deleteById_shouldClearSongsAndAlbums_whenArtistDeleted() {
-        Album album = new Album();
-        album.setId(10L);
-        artist.setAlbums(new ArrayList<>(List.of(album)));
+        Playlist playlist = new Playlist();
+        playlist.setId(10L);
 
         when(artistRepository.findById(1L)).thenReturn(Optional.of(artist));
 
         artistService.deleteById(1L);
 
-        assertTrue(artist.getAlbums().isEmpty());
         assertTrue(artist.getSongs().isEmpty());
     }
 }

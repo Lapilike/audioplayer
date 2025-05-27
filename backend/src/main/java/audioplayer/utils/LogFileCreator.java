@@ -32,7 +32,7 @@ public class LogFileCreator {
             if (fromDate.isAfter(toDate)) throw new IllegalArgumentException("Incorrect date range");
 
             while (!fromDate.isAfter(toDate)) {
-                String filename = String.format("logs/app-%s.log", dateFormatter.format(fromDate));
+                String filename = String.format("backend/logs/app-%s.log", dateFormatter.format(fromDate));
                 Path logFile = Paths.get(filename);
                 if (!Files.exists(logFile)) {
                     fromDate = fromDate.plusDays(1);

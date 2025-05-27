@@ -6,7 +6,6 @@ import audioplayer.model.dto.ArtistDto;
 import audioplayer.model.dto.CreateArtistDto;
 import audioplayer.model.dto.CreateSongDto;
 import audioplayer.model.dto.SongDto;
-import audioplayer.model.entity.Album;
 import audioplayer.model.entity.Artist;
 import audioplayer.model.entity.Song;
 import audioplayer.repository.SongRepository;
@@ -173,18 +172,7 @@ public class SongServiceImpl implements SongService {
     public SongDto patch(Long id, CreateSongDto createSongDto) {
         Song song = songRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(NotFoundException.SONG_NOT_FOUND));
-        if (createSongDto.getTitle() != null) {
-            song.setTitle(createSongDto.getTitle());
-        }
-        if (createSongDto.getArtists() != null) {
-            addSongToArtist(createSongDto, song);
-        }
-        if (createSongDto.getFilePath() != null) {
-            song.setFilePath(createSongDto.getFilePath());
-        }
-        if (createSongDto.getGenre() != null) {
-            song.setGenre(createSongDto.getGenre());
-        }
+        setSongParams(createSongDto, song);
 
         return new SongDto(songRepository.save(song));
     }
@@ -197,10 +185,8 @@ public class SongServiceImpl implements SongService {
         List<Artist> artistList = song.getArtist();
         artistList.forEach(artist -> artist.getSongs().remove(song));
 
-        Album album = song.getAlbum();
-        if (album != null) {
-            album.getSongs().remove(song);
-        }
+        song.getPlaylists()
+                .forEach(playlist -> playlist.getSongs().remove(song));
 
         songRepository.deleteById(song.getId());
         cache.remove(id);
@@ -229,7 +215,6 @@ public class SongServiceImpl implements SongService {
 
             String nameWithoutExtension = fileName.replaceFirst("[.][^.]+$", "");
 
-            // Разделяем по " - "
             String[] parts = nameWithoutExtension.split(" - ", 2);
 
             if (parts.length < 2) {
@@ -273,14 +258,34 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
-    public void createConnection() {
+    public void changeDir() {
+        final String constFilePath = "files";
         List<Song> songList = songRepository.findAll();
-        for (Song song : songList) {
-            List<Artist> artist = artistService.findAllById(
-                     song.getArtist().stream().map(Artist::getId).toList());
-            song.getArtist().clear();
-            song.getArtist().addAll(artist);
-        }
+        songList.forEach(song -> {
+            String filePath = song.getFilePath();
+
+            String newFilePath = filePath.replace(constFilePath + File.separator, "");
+
+            song.setFilePath(newFilePath);
+        });
         songRepository.saveAll(songList);
+    }
+
+    private void setSongParams(CreateSongDto songDto, Song song) {
+        if (song == null) {
+            return;
+        }
+        if (songDto.getTitle() != null) {
+            song.setTitle(songDto.getTitle());
+        }
+        if (songDto.getArtists() != null) {
+            addSongToArtist(songDto, song);
+        }
+        if (songDto.getFilePath() != null) {
+            song.setFilePath(songDto.getFilePath());
+        }
+        if (songDto.getGenre() != null) {
+            song.setGenre(songDto.getGenre());
+        }
     }
 }

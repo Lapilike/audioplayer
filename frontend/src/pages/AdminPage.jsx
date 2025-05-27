@@ -1,26 +1,23 @@
 import {Box} from "@mui/material";
 import {Button} from "@mui/material";
 import axios from "axios";
-import {useState} from "react";
+import {useNotification} from "../components/NotificationProvider";
+
 
 export default function AdminPage() {
-    const [data, setData] = useState(null);
-    const [error, setError] = useState('');
+    const { showNotification } = useNotification();
 
     const handleClick = async () => {
         try {
-            const response = await axios.get('/api/v1/music/parse');
-            setData(response.data);
-            setError('');
+            await axios.get('/api/v1/music/parse');
         } catch (err) {
-            setError('Ошибка при загрузке данных');
             console.error(err);
         }
     };
 
-    const attach = async () => {
+    const rename = async () => {
         try {
-            const response = await axios.get('/api/v1/music/attach');
+            const response = await axios.get('/api/v1/music/change');
             setData(response.data);
             setError('');
         } catch (err) {
@@ -29,20 +26,22 @@ export default function AdminPage() {
         }
     };
 
-    return (
-        <Box sx={{
-            alignSelf: 'center',
-            padding: 10 + "px",
-            height: '100px',
-            width: '200px'
-        }}>
-            <Button variant="contained" onClick={handleClick}>
-                Update DB
-            </Button>
-            <p/>
-            <Button variant="contained" onClick={attach}>
-                Update connection
-            </Button>
-        </Box>
-    )
+    return <Box sx={{
+        alignSelf: 'center',
+        padding: 10 + "px",
+        height: '100px',
+        width: '200px'
+    }}>
+        <Button variant="contained" onClick={handleClick}>
+            Update DB
+        </Button>
+        <p/>
+        <Button variant="contained" onClick={rename}>
+            notify
+        </Button>
+        <p/>
+        <Button variant="contained" onClick={() => {showNotification("jdasjjdajdl")}}>
+            notify
+        </Button>
+    </Box>
 }

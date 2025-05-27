@@ -28,5 +28,5 @@ public interface SongService {
 
     void parseAll();
 
-    void createConnection();
+    void changeDir();
 }

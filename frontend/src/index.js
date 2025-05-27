@@ -6,14 +6,17 @@ import reportWebVitals from './reportWebVitals';
 import {ThemeProvider} from "@mui/material";
 import {darkTheme} from "./themes/theme";
 import {CssBaseline} from "@mui/material";
+import {NotificationProvider} from "./components/NotificationProvider";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-      <ThemeProvider theme={darkTheme}>
-          <CssBaseline />
-          <App />
-      </ThemeProvider>
+      <NotificationProvider>
+          <ThemeProvider theme={darkTheme}>
+              <CssBaseline />
+              <App />
+          </ThemeProvider>
+      </NotificationProvider>
   </React.StrictMode>
 );
 

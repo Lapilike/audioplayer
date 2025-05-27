@@ -11,7 +11,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import java.util.ArrayList;
@@ -37,15 +36,10 @@ public class Artist {
     @Column
     private String name;
 
-    @OneToMany(
+    @ManyToMany(
             fetch = FetchType.LAZY,
-            mappedBy = "artist",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
-    private List<Album> albums;
-
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
+    )
     @JoinTable(
             name = "artist_song_id",
             joinColumns = @JoinColumn(name = "artist_id"),
@@ -55,7 +49,6 @@ public class Artist {
 
     public Artist(CreateArtistDto createArtistDto) {
         this.name = createArtistDto.getName();
-        this.albums = new ArrayList<>();
         this.songs = new ArrayList<>();
     }
 }

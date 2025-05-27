@@ -7,9 +7,15 @@ import audioplayer.service.SongService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +35,27 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Песни", description = "Управление песнями")
 public class SongController {
     SongService songService;
+    private final Path rootLocation = Paths.get("backend/files");
+
+    @GetMapping("/file/{filename:.+}")
+    public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
+        try {
+            Path file = rootLocation.resolve(filename).normalize();
+            Resource resource = new UrlResource(file.toUri());
+
+            if (!resource.exists() || !resource.isReadable()) {
+                return ResponseEntity.notFound().build();
+            }
+
+            String contentType = "audio/mpeg"; // или определять динамически по расширению
+
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType(contentType))
+                    .body(resource);
+        } catch (MalformedURLException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 
     @Operation(summary = "Прочитать файлы песен и обновить БД")
     @GetMapping("/parse")
@@ -36,10 +63,9 @@ public class SongController {
         songService.parseAll();
     }
 
-    @Operation(summary = "Прочитать файлы песен и обновить БД")
-    @GetMapping("/attach")
+    @GetMapping("/change")
     public void attachAll() {
-        songService.createConnection();
+        songService.changeDir();
     }
 
     @Operation(summary = "Получить список всех песен")
@@ -53,6 +79,12 @@ public class SongController {
     @GetMapping("/{id}")
     public SongDto getById(@PathVariable Long id) {
         return new SongDto(songService.findById(id));
+    }
+
+    @Operation(summary = "Получить песню по ID")
+    @GetMapping("/all")
+    public List<SongDto> getAllById(@RequestParam List<Long> ids) {
+        return songService.findAllById(ids).stream().map(SongDto::new).toList();
     }
 
     @Operation(summary = "Поиск песен по названию и/или исполнителю")

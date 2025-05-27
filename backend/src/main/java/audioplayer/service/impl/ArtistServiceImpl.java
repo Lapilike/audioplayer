@@ -7,26 +7,21 @@ import audioplayer.model.dto.UpdateArtistDto;
 import audioplayer.model.entity.Artist;
 import audioplayer.model.entity.Song;
 import audioplayer.repository.ArtistRepository;
-import audioplayer.service.AlbumService;
 import audioplayer.service.ArtistService;
 import audioplayer.service.SongService;
 import jakarta.transaction.Transactional;
 import java.util.List;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ArtistServiceImpl implements ArtistService {
     private final ArtistRepository artistRepository;
     private final SongService songService;
-    private final AlbumService albumService;
 
     public ArtistServiceImpl(ArtistRepository artistRepository,
-                             SongService songService,
-                             @Lazy AlbumService albumService) {
+                             SongService songService) {
         this.artistRepository = artistRepository;
         this.songService = songService;
-        this.albumService = albumService;
     }
 
     @Override
@@ -126,9 +121,6 @@ public class ArtistServiceImpl implements ArtistService {
     public void deleteById(Long id) {
         Artist artist = artistRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(NotFoundException.ARTIST_NOT_FOUND));
-
-        artist.getAlbums().forEach(album -> albumService.delete(album.getId()));
-        artist.getAlbums().clear();
 
         List<Long> songIdsToDelete = artist.getSongs().stream()
                 .filter(song -> song.getArtist().size() == 1 && song.getArtist().contains(artist))

@@ -7,13 +7,13 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,7 +25,7 @@ import lombok.ToString;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = "artist")
+@ToString(exclude = {"artist", "playlists"})
 public class Song {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,13 +34,22 @@ public class Song {
     @Column(nullable = false)
     private String title;
 
-    @ManyToOne
-    @JoinColumn(name = "album_id")
-    private Album album;
+    @ManyToMany(
+            fetch = FetchType.LAZY,
+            mappedBy = "songs",
+            cascade = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH,
+            }
+    )
+    private List<Playlist> playlists;
 
     @ManyToMany(
             mappedBy = "songs",
-            cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
+    )
     private List<Artist> artist;
 
     @Enumerated(EnumType.ORDINAL)
@@ -54,5 +63,6 @@ public class Song {
         this.title = musicDto.getTitle();
         this.genre = musicDto.getGenre();
         this.filePath = musicDto.getFilePath();
+        this.playlists = new ArrayList<>();
     }
 }

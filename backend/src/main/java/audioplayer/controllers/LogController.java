@@ -7,7 +7,9 @@ import audioplayer.service.LogService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import lombok.AllArgsConstructor;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -46,10 +48,13 @@ public class LogController {
     }
 
     @GetMapping("/status/{id}")
-    public ResponseEntity<String> getLogStatus(@PathVariable String id) {
+    public ResponseEntity<Map<String, Object>> getLogStatus(@PathVariable String id) {
         TaskStatus status = logService.getStatus(id);
+        Map<String, Object> body = new HashMap<>();
+        body.put("id", id);
+        body.put("status", status.getStatus());
         if (status.getStatus() == Status.NOT_FOUND) throw new NotFoundException("Logs not found");
-        return ResponseEntity.ok(status.getStatus().name());
+        return ResponseEntity.ok().body(body);
     }
 
     @GetMapping("/file/{id}")

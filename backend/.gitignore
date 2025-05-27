@@ -1,6 +1,7 @@
 HELP.md
 target/
 /logs
+/files
 !backend/.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
@@ -33,5 +34,4 @@ build/
 ### VS Code ###
 .vscode/
 /src/main/resources/credentials.json
-/src/main/songs/
-/src/main/songs/
+/songs/

@@ -24,4 +24,6 @@ public class CreateSongDto {
 
     @NotBlank(message = "FilePath must be provided")
     private String filePath;
+
+    private Long songId;
 }
