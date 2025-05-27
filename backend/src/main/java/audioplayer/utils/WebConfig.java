@@ -10,14 +10,7 @@ public class WebConfig {
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings( CorsRegistry registry) {
-                registry.addMapping("/**") // путь, на который действует CORS
-                        .allowedOrigins("http://localhost:3000") // кому разрешаем доступ
-                        .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
-                        .allowedHeaders("*")
-                        .allowCredentials(true);
-            }
+
         };
     }
 }
