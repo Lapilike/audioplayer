@@ -18,7 +18,7 @@ function AddPlaylistCard({onPlaylistAdded }) {
     const handleSubmit = async () => {
         if (!playlistName.trim()) return;
         try {
-            const response = await axios.post('/api/v1/playlist', {
+            const response = axios.post('/api/v1/playlist', {
                 name: playlistName,
                 songs: songIds,
             });
