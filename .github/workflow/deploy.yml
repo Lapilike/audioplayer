@@ -2,7 +2,7 @@ name: Build and Push Docker Image
 
 on:
   push:
-    branches: [ main ]  # или другая ветка, по которой триггер
+    branches: [ master ]  # или другая ветка, по которой триггер
 
 jobs:
   build:
