@@ -15,9 +15,9 @@ import org.springframework.stereotype.Component;
 public class CorsFilter implements Filter {
 
     private final List<String> allowedOrigins = List.of(
-            "https://frontend.example.com",
+            "https://audioplayer-iovo.onrender.com",
             "http://localhost:3000",
-            "https://admin.example.com"
+            "http://localhost:4200"
     );
 
     @Override
