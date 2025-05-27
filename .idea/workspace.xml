@@ -1,0 +1,911 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="SCOPE_TYPE" value="3" />
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="59adcc29-f29a-4b2e-92c6-888f36c79124" name="Changes" comment="Added frontend of the application&#10;Changed some database connections">
+      <change afterPath="$PROJECT_DIR$/backend/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/checkstyleidea-libs/readme.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/backend/logs/app-2025-05-13.log" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.dockerignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.idea/frontend.iml" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.idea/frontend.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/AdminPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/AdminPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/app-2025-05-12.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/app-2025-05-13.log" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="directory" />
+    </option>
+  </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Exception" />
+        <option value="spring-beans.schema" />
+        <option value="AnnotationType" />
+        <option value="Interface" />
+        <option value="JUnit5 Test Class" />
+        <option value="Class" />
+        <option value="Dockerfile" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="HashMap" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Lapilike&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Lapilike/audioplayer.git&quot;,
+    &quot;accountId&quot;: &quot;865e0594-4755-444e-955f-97db5f2ddd40&quot;
+  }
+}</component>
+  <component name="JavaAutoRunManager">
+    <enabled-run-configurations>
+      <run-configuration type="JUnit" name="SongServiceTest.parseAll_shouldLogInfoWhenNoMusicFiles" />
+    </enabled-run-configurations>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2tBxDJmZOdfzBiXaN62yF1a6cBH" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.ChatClient.executor": "Run",
+    "JUnit.AlbumServiceTest.create_shouldReturnAlbumDto_whenValidCreateDto.executor": "Run",
+    "JUnit.AlbumServiceTest.delete_ShouldThrowNotFoundException.executor": "Run",
+    "JUnit.AlbumServiceTest.delete_shouldRemoveSongsAndDeleteAlbum_whenAlbumFound.executor": "Run",
+    "JUnit.AlbumServiceTest.executor": "Coverage",
+    "JUnit.AlbumServiceTest.findAll_ShouldReturnList.executor": "Run",
+    "JUnit.AlbumServiceTest.patch_ShouldThrowNotFoundException.executor": "Run",
+    "JUnit.AlbumServiceTest.patch_ShouldUpdateAllFields.executor": "Run",
+    "JUnit.AlbumServiceTest.patch_shouldUpdateAlbumName.executor": "Run",
+    "JUnit.AlbumServiceTest.patch_shouldUpdateArtist.executor": "Debug",
+    "JUnit.AlbumServiceTest.patch_shouldUpdateSongs.executor": "Run",
+    "JUnit.All in audioplayer.executor": "Run",
+    "JUnit.ArtistServiceTest.create_ShouldReturnArtistDto.executor": "Run",
+    "JUnit.ArtistServiceTest.deleteById_shouldClearSongsAndAlbums_whenArtistDeleted.executor": "Run",
+    "JUnit.ArtistServiceTest.deleteById_shouldDeleteAlbumsAndSongs.executor": "Run",
+    "JUnit.ArtistServiceTest.deleteById_shouldNotDeleteSongs_whenSongHasMultipleArtists.executor": "Run",
+    "JUnit.ArtistServiceTest.executor": "Coverage",
+    "JUnit.ArtistServiceTest.findAllById_ShouldReturnList.executor": "Run",
+    "JUnit.ArtistServiceTest.findAllByName_ShouldReturnArtistDtos.executor": "Coverage",
+    "JUnit.ArtistServiceTest.findAllByName_ShouldThrowNotFoundException.executor": "Coverage",
+    "JUnit.ArtistServiceTest.findAll_ShouldReturnList.executor": "Run",
+    "JUnit.ArtistServiceTest.findById_ShouldReturnArtist.executor": "Run",
+    "JUnit.ArtistServiceTest.findById_ShouldReturnNotFound.executor": "Run",
+    "JUnit.ArtistServiceTest.findByName_ShouldReturnArtistDtos.executor": "Run",
+    "JUnit.ArtistServiceTest.findByName_ShouldReturnNotFound.executor": "Coverage",
+    "JUnit.ArtistServiceTest.patch_ShouldUpdateNameFields.executor": "Run",
+    "JUnit.ArtistServiceTest.updateList_ShouldThrowNotFoundException.executor": "Coverage",
+    "JUnit.ArtistServiceTest.update_ShouldThrowNotFoundException.executor": "Run",
+    "JUnit.ArtistServiceTest.update_ShouldUpdateArtistAndReturnArtistDto.executor": "Run",
+    "JUnit.LogServiceTest.executor": "Run",
+    "JUnit.LogServiceTest.getLogsByDate_shouldThrowDateTimeParseException_whenCannotReadDateFromFileCorrectly.executor": "Debug",
+    "JUnit.SongServiceTest.create_ShouldSaveSongAndReturnDto.executor": "Run",
+    "JUnit.SongServiceTest.deleteById_ShouldRemoveSongWithoutAlbum.executor": "Run",
+    "JUnit.SongServiceTest.executor": "Run",
+    "JUnit.SongServiceTest.findByCriteria_ShouldReturnFromCacheIfPresent.executor": "Run",
+    "JUnit.SongServiceTest.parseAll_ShouldLogAndReturnIfDirectoryMissing.executor": "Run",
+    "JUnit.SongServiceTest.parseAll_ShouldParseValidFileAndIgnoreInvalid.executor": "Run",
+    "JUnit.SongServiceTest.parseAll_shouldLogInfoWhenNoMusicFiles.executor": "Debug",
+    "JUnit.SongServiceTest.parseAll_shouldProcessFilesCorrectly.executor": "Run",
+    "JUnit.SongServiceTest.parseAll_shouldProcessFilesSuccessfully.executor": "Run",
+    "JUnit.SongServiceTest.parseAll_shouldThrowNotFoundExceptionWhenDirectoryDoesNotExist.executor": "Run",
+    "JUnit.SongServiceTest.patch_ShouldUpdateAllFields.executor": "Run",
+    "JUnit.SongServiceTest.patch_ShouldUpdateArtist.executor": "Run",
+    "JUnit.SongServiceTest.patch_WhenGenreIncorrect_ShouldThrowException.executor": "Run",
+    "JUnit.SongServiceTest.update_ShouldReturnList.executor": "Coverage",
+    "JUnit.SongServiceTest.update_ShouldUpdateSongAndReturnDto.executor": "Run",
+    "JUnit.VisitCounterServiceTest.executor": "Run",
+    "JUnit.java in audioplayer.executor": "Coverage",
+    "JUnit.java in backend.executor": "Coverage",
+    "JavaScript Debug.Debug Application.executor": "Run",
+    "Node.js.App.js.executor": "Run",
+    "Node.js.index.js.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "Spring Boot.AudioplayerApplication.executor": "Run",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "extract.method.default.visibility": "private",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_directory_selection": "C:/Users/lapil/IdeaProjects/audioplayer/backend/src/main/java/by/lapil/audioplayer",
+    "last_opened_file_path": "C:/Users/lapil/IdeaProjects/audioplayer/backend",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_interpreter_path": "node",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\lapil\IdeaProjects\audioplayer\backend\src\main\resources" />
+      <recent name="C:\Users\lapil\IdeaProjects\audioplayer\frontend\src\main\resoucres" />
+      <recent name="C:\Users\lapil\IdeaProjects\audioplayer\backend\src\main\java\by\lapil\audioplayer\controllers" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\lapil\IdeaProjects\audioplayer\backend" />
+      <recent name="C:\Users\lapil\IdeaProjects\audioplayer\backend\src\main\java\audioplayer" />
+      <recent name="C:\Users\lapil\IdeaProjects\audioplayer\backend\src\main\resources" />
+      <recent name="C:\Users\lapil\IdeaProjects\audioplayer\backend\src\main" />
+      <recent name="C:\Users\lapil\IdeaProjects\audioplayer\backend\src\main\resources\songs" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="v2.service" />
+      <recent name="v2.controllers" />
+      <recent name="" />
+      <recent name="v2.cache" />
+      <recent name="v2.advice" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="by.lapil.audioplayer.service" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.AudioplayerApplication">
+    <configuration name="ArtistServiceTest.findAllByName_ShouldReturnArtistDtos" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="audioplayer.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="audioplayer.service" />
+      <option name="MAIN_CLASS_NAME" value="audioplayer.service.ArtistServiceTest" />
+      <option name="METHOD_NAME" value="findAllByName_ShouldReturnArtistDtos" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ArtistServiceTest.findAllByName_ShouldThrowNotFoundException" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="audioplayer.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="audioplayer.service" />
+      <option name="MAIN_CLASS_NAME" value="audioplayer.service.ArtistServiceTest" />
+      <option name="METHOD_NAME" value="findAllByName_ShouldThrowNotFoundException" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SongServiceTest.parseAll_shouldLogInfoWhenNoMusicFiles" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="audioplayer.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="audioplayer.service" />
+      <option name="MAIN_CLASS_NAME" value="audioplayer.service.SongServiceTest" />
+      <option name="METHOD_NAME" value="parseAll_shouldLogInfoWhenNoMusicFiles" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="java in backend" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="backend" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/backend/src/test/java" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Debug Application" type="JavascriptDebugType" uri="http://localhost:3000">
+      <method v="2" />
+    </configuration>
+    <configuration name="AudioplayerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <option name="SPRING_BOOT_MAIN_CLASS" value="audioplayer.AudioplayerApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="audioplayer.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="JavaScript Debug.Debug Application" />
+      <item itemvalue="JUnit.ArtistServiceTest.findAllByName_ShouldReturnArtistDtos" />
+      <item itemvalue="JUnit.ArtistServiceTest.findAllByName_ShouldThrowNotFoundException" />
+      <item itemvalue="JUnit.java in backend" />
+      <item itemvalue="JUnit.SongServiceTest.parseAll_shouldLogInfoWhenNoMusicFiles" />
+      <item itemvalue="Spring Boot.AudioplayerApplication" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.AudioplayerApplication" />
+        <item itemvalue="JUnit.SongServiceTest.parseAll_shouldLogInfoWhenNoMusicFiles" />
+        <item itemvalue="JUnit.ArtistServiceTest.findAllByName_ShouldThrowNotFoundException" />
+        <item itemvalue="JUnit.ArtistServiceTest.findAllByName_ShouldReturnArtistDtos" />
+        <item itemvalue="JUnit.java in backend" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-125ca727e0f0-intellij.indexing.shared.core-IU-243.24978.46" />
+        <option value="bundled-js-predefined-d6986cc7102b-76f8388c3a79-JavaScript-IU-243.24978.46" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="StructureViewState">
+    <option name="selectedTab" value="Logical" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="59adcc29-f29a-4b2e-92c6-888f36c79124" name="Changes" comment="" />
+      <created>1739839148064</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1739839148064</updated>
+      <workItem from="1739839149173" duration="1313000" />
+      <workItem from="1739866977804" duration="1053000" />
+      <workItem from="1739871286173" duration="4959000" />
+      <workItem from="1740136640286" duration="105000" />
+      <workItem from="1740136757167" duration="8000" />
+      <workItem from="1740136772079" duration="136000" />
+      <workItem from="1740136916525" duration="10000" />
+      <workItem from="1740137053414" duration="1254000" />
+      <workItem from="1740732795284" duration="1971000" />
+      <workItem from="1740741502346" duration="2231000" />
+      <workItem from="1740744655174" duration="718000" />
+      <workItem from="1741022096426" duration="171000" />
+      <workItem from="1741022275509" duration="2999000" />
+      <workItem from="1741087093119" duration="2516000" />
+      <workItem from="1741089709813" duration="2910000" />
+      <workItem from="1741639522337" duration="2304000" />
+      <workItem from="1741673462398" duration="4462000" />
+      <workItem from="1741678503337" duration="2693000" />
+      <workItem from="1741761136405" duration="20116000" />
+      <workItem from="1741851747848" duration="14684000" />
+      <workItem from="1741902464025" duration="6822000" />
+      <workItem from="1741934517200" duration="1431000" />
+      <workItem from="1741938454897" duration="14511000" />
+      <workItem from="1742162645724" duration="2179000" />
+      <workItem from="1742198263009" duration="3517000" />
+      <workItem from="1742242611224" duration="12132000" />
+      <workItem from="1742298773531" duration="1071000" />
+      <workItem from="1742391735471" duration="4069000" />
+      <workItem from="1742543412501" duration="3591000" />
+      <workItem from="1742554320970" duration="3386000" />
+      <workItem from="1742809542659" duration="4128000" />
+      <workItem from="1743444449357" duration="3163000" />
+      <workItem from="1743457603768" duration="3581000" />
+      <workItem from="1743629399262" duration="43000" />
+      <workItem from="1743629581499" duration="560000" />
+      <workItem from="1744210225847" duration="1819000" />
+      <workItem from="1744212068409" duration="1220000" />
+      <workItem from="1744268833252" duration="4359000" />
+      <workItem from="1744288570857" duration="234000" />
+      <workItem from="1744365285112" duration="3002000" />
+      <workItem from="1744370346171" duration="1864000" />
+      <workItem from="1744660411387" duration="6878000" />
+      <workItem from="1744706346352" duration="7069000" />
+      <workItem from="1744963369588" duration="6643000" />
+      <workItem from="1745566840523" duration="14651000" />
+      <workItem from="1746907962477" duration="8264000" />
+      <workItem from="1746988644479" duration="11783000" />
+      <workItem from="1747006115285" duration="3098000" />
+      <workItem from="1747009262961" duration="873000" />
+      <workItem from="1747010155728" duration="142000" />
+      <workItem from="1747043541882" duration="7519000" />
+      <workItem from="1747089483838" duration="2024000" />
+      <workItem from="1747091595578" duration="4564000" />
+      <workItem from="1747119626284" duration="3886000" />
+      <workItem from="1747126486996" duration="13837000" />
+      <workItem from="1747393476226" duration="767000" />
+      <workItem from="1747394256129" duration="626000" />
+      <workItem from="1747396347795" duration="1014000" />
+      <workItem from="1747595315093" duration="809000" />
+      <workItem from="1747596138288" duration="1781000" />
+      <workItem from="1747646378491" duration="756000" />
+      <workItem from="1747648862748" duration="1829000" />
+      <workItem from="1747896621796" duration="2838000" />
+      <workItem from="1747900168360" duration="13997000" />
+      <workItem from="1748199934275" duration="2995000" />
+      <workItem from="1748257251325" duration="10096000" />
+      <workItem from="1748303915290" duration="2892000" />
+      <workItem from="1748307150362" duration="148000" />
+      <workItem from="1748307305737" duration="273000" />
+      <workItem from="1748307588253" duration="5191000" />
+    </task>
+    <task id="LOCAL-00042" summary="Added albumService, AlbumController, AlbumRepository&#10;added DTOs for album entity&#10;code fixes">
+      <option name="closed" value="true" />
+      <created>1741935902714</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1741935902714</updated>
+    </task>
+    <task id="LOCAL-00043" summary="code fixes">
+      <option name="closed" value="true" />
+      <created>1741935909796</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1741935909796</updated>
+    </task>
+    <task id="LOCAL-00044" summary="code fixes&#10;Deleted unnecessary operations with Albums from Author">
+      <option name="closed" value="true" />
+      <created>1741940905531</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1741940905531</updated>
+    </task>
+    <task id="LOCAL-00045" summary="Fixed problem with Artist deletion">
+      <option name="closed" value="true" />
+      <created>1742163688741</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1742163688741</updated>
+    </task>
+    <task id="LOCAL-00046" summary="Sonar code fixes">
+      <option name="closed" value="true" />
+      <created>1742163820516</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1742163820516</updated>
+    </task>
+    <task id="LOCAL-00047" summary="Sonar code fixes">
+      <option name="closed" value="true" />
+      <created>1742199906630</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1742199906630</updated>
+    </task>
+    <task id="LOCAL-00048" summary="Sonar code fixes">
+      <option name="closed" value="true" />
+      <created>1742285442398</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1742285442398</updated>
+    </task>
+    <task id="LOCAL-00049" summary="Added cache and search by artist, title and genre">
+      <option name="closed" value="true" />
+      <created>1742293517735</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1742293517735</updated>
+    </task>
+    <task id="LOCAL-00050" summary="Cache modified&#10;Search simplified">
+      <option name="closed" value="true" />
+      <created>1742809773314</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1742809773314</updated>
+    </task>
+    <task id="LOCAL-00051" summary="Sonar code fixes">
+      <option name="closed" value="true" />
+      <created>1742810107861</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1742810107861</updated>
+    </task>
+    <task id="LOCAL-00052" summary="Sonar code fixes">
+      <option name="closed" value="true" />
+      <created>1742810630643</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1742810630643</updated>
+    </task>
+    <task id="LOCAL-00053" summary="Sonar code fixes">
+      <option name="closed" value="true" />
+      <created>1742810810418</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1742810810418</updated>
+    </task>
+    <task id="LOCAL-00054" summary="Swagger&#10;Added Bad request exception handler&#10;Added logger">
+      <option name="closed" value="true" />
+      <created>1744273521035</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1744273521036</updated>
+    </task>
+    <task id="LOCAL-00055" summary="Added log controller">
+      <option name="closed" value="true" />
+      <created>1744367470663</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1744367470663</updated>
+    </task>
+    <task id="LOCAL-00056" summary="Added log controller">
+      <option name="closed" value="true" />
+      <created>1744367479196</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1744367479196</updated>
+    </task>
+    <task id="LOCAL-00057" summary="Added log controller">
+      <option name="closed" value="true" />
+      <created>1744367557172</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1744367557172</updated>
+    </task>
+    <task id="LOCAL-00058" summary="Added log controller">
+      <option name="closed" value="true" />
+      <created>1744367736829</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1744367736829</updated>
+    </task>
+    <task id="LOCAL-00059" summary="Added log controller">
+      <option name="closed" value="true" />
+      <created>1744368022377</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1744368022377</updated>
+    </task>
+    <task id="LOCAL-00060" summary="Added log controller">
+      <option name="closed" value="true" />
+      <created>1744368033770</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1744368033770</updated>
+    </task>
+    <task id="LOCAL-00061" summary="Added log controller">
+      <option name="closed" value="true" />
+      <created>1744368041545</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1744368041545</updated>
+    </task>
+    <task id="LOCAL-00062" summary="Added log controller">
+      <option name="closed" value="true" />
+      <created>1744368260995</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1744368260995</updated>
+    </task>
+    <task id="LOCAL-00063" summary="Added log controller">
+      <option name="closed" value="true" />
+      <created>1744668279304</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1744668279305</updated>
+    </task>
+    <task id="LOCAL-00064" summary="Added log controller">
+      <option name="closed" value="true" />
+      <created>1744670608293</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1744670608293</updated>
+    </task>
+    <task id="LOCAL-00065" summary="Added tests">
+      <option name="closed" value="true" />
+      <created>1744670620544</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1744670620544</updated>
+    </task>
+    <task id="LOCAL-00066" summary="Added tests">
+      <option name="closed" value="true" />
+      <created>1744670858549</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1744670858549</updated>
+    </task>
+    <task id="LOCAL-00067" summary="Added tests">
+      <option name="closed" value="true" />
+      <created>1744706397164</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1744706397164</updated>
+    </task>
+    <task id="LOCAL-00068" summary="Added tests">
+      <option name="closed" value="true" />
+      <created>1745580786751</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1745580786751</updated>
+    </task>
+    <task id="LOCAL-00069" summary="Added LogService&#10;Added ability to compile logs from-to date&#10;Added ability to track status of log compiling&#10;Added ability to download compiled log&#10;Added visit counter">
+      <option name="closed" value="true" />
+      <created>1747000684933</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1747000684933</updated>
+    </task>
+    <task id="LOCAL-00070" summary="Added LogService&#10;Added ability to compile logs from-to date&#10;Added ability to track status of log compiling&#10;Added ability to download compiled log&#10;Added visit counter">
+      <option name="closed" value="true" />
+      <created>1747000751722</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1747000751722</updated>
+    </task>
+    <task id="LOCAL-00071" summary="Added LogService&#10;Added ability to compile logs from-to date&#10;Added ability to track status of log compiling&#10;Added ability to download compiled log&#10;Added visit counter">
+      <option name="closed" value="true" />
+      <created>1747000837831</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1747000837831</updated>
+    </task>
+    <task id="LOCAL-00072" summary="Added LogService&#10;Added ability to compile logs from-to date&#10;Added ability to track status of log compiling&#10;Added ability to download compiled log&#10;Added visit counter">
+      <option name="closed" value="true" />
+      <created>1747001003504</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1747001003504</updated>
+    </task>
+    <task id="LOCAL-00073" summary="Added LogService&#10;Added ability to compile logs from-to date&#10;Added ability to track status of log compiling&#10;Added ability to download compiled log&#10;Added visit counter">
+      <option name="closed" value="true" />
+      <created>1747001052842</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1747001052842</updated>
+    </task>
+    <task id="LOCAL-00074" summary="Fixed security issues&#10;Interrupted exception now re-thrown">
+      <option name="closed" value="true" />
+      <created>1747001524412</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1747001524412</updated>
+    </task>
+    <task id="LOCAL-00075" summary="Repeated text out into constants&#10;Deleted &quot;public&quot; type in Test classes&#10;Minor code fixes">
+      <option name="closed" value="true" />
+      <created>1747001908486</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1747001908486</updated>
+    </task>
+    <task id="LOCAL-00076" summary="Minor code fixes">
+      <option name="closed" value="true" />
+      <created>1747002312674</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1747002312674</updated>
+    </task>
+    <task id="LOCAL-00077" summary="Minor code fixes">
+      <option name="closed" value="true" />
+      <created>1747003851163</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1747003851163</updated>
+    </task>
+    <task id="LOCAL-00078" summary="Minor code fixes">
+      <option name="closed" value="true" />
+      <created>1747146574007</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1747146574008</updated>
+    </task>
+    <task id="LOCAL-00079" summary="Minor code fixes">
+      <option name="closed" value="true" />
+      <created>1747146724256</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1747146724256</updated>
+    </task>
+    <task id="LOCAL-00080" summary="Minor code fixes">
+      <option name="closed" value="true" />
+      <created>1747146734670</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1747146734671</updated>
+    </task>
+    <task id="LOCAL-00081" summary="Minor code fixes">
+      <option name="closed" value="true" />
+      <created>1747147079109</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1747147079109</updated>
+    </task>
+    <task id="LOCAL-00082" summary="Minor code fixes">
+      <option name="closed" value="true" />
+      <created>1747147085637</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1747147085637</updated>
+    </task>
+    <task id="LOCAL-00083" summary="Minor code fixes">
+      <option name="closed" value="true" />
+      <created>1747147099371</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1747147099371</updated>
+    </task>
+    <task id="LOCAL-00084" summary="Minor code fixes">
+      <option name="closed" value="true" />
+      <created>1747147124087</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1747147124087</updated>
+    </task>
+    <task id="LOCAL-00085" summary="Minor code fixes">
+      <option name="closed" value="true" />
+      <created>1747147247059</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1747147247059</updated>
+    </task>
+    <task id="LOCAL-00086" summary="Minor code fixes">
+      <option name="closed" value="true" />
+      <created>1747147591313</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1747147591313</updated>
+    </task>
+    <task id="LOCAL-00087" summary="Minor code fixes">
+      <option name="closed" value="true" />
+      <created>1747147676941</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1747147676943</updated>
+    </task>
+    <task id="LOCAL-00088" summary="Minor code fixes">
+      <option name="closed" value="true" />
+      <created>1747147923930</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1747147923930</updated>
+    </task>
+    <task id="LOCAL-00089" summary="Minor code fixes">
+      <option name="closed" value="true" />
+      <created>1747148016584</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1747148016584</updated>
+    </task>
+    <task id="LOCAL-00090" summary="Added frontend of the application&#10;Changed some database connections">
+      <option name="closed" value="true" />
+      <created>1748304773452</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1748304773453</updated>
+    </task>
+    <option name="localTasksCounter" value="91" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="First commit&#10;Added DAO&#10;Added Service&#10;Added CRUD" />
+    <MESSAGE value="Added ArtistService&#10;Added ArtistRepository" />
+    <MESSAGE value="Added ArtistService&#10;Added ArtistRepository&#10;&quot;Music&quot; renamed to &quot;Songs&quot;&#10;Added CRUD to Songs&#10;Added SongRepository&#10;Added DTOs for Song and Artist&#10;InMemory objects deleted" />
+    <MESSAGE value="Code fixes" />
+    <MESSAGE value="Added albumService, AlbumController, AlbumRepository&#10;added DTOs for album entity&#10;code fixes" />
+    <MESSAGE value="code fixes" />
+    <MESSAGE value="code fixes&#10;Deleted unnecessary operations with Albums from Author" />
+    <MESSAGE value="Fixed problem with Artist deletion" />
+    <MESSAGE value="Added cache and search by artist, title and genre" />
+    <MESSAGE value="Cache modified&#10;Search simplified" />
+    <MESSAGE value="Merge remote-tracking branch 'origin/master'" />
+    <MESSAGE value="Sonar code fixes" />
+    <MESSAGE value="Swagger&#10;Added Bad request exception handler&#10;Added logger" />
+    <MESSAGE value="Added log controller" />
+    <MESSAGE value="Added tests" />
+    <MESSAGE value="Added LogService&#10;Added ability to compile logs from-to date&#10;Added ability to track status of log compiling&#10;Added ability to download compiled log&#10;Added visit counter" />
+    <MESSAGE value="Fixed security issues&#10;Interrupted exception now re-thrown" />
+    <MESSAGE value="Repeated text out into constants&#10;Deleted &quot;public&quot; type in Test classes&#10;Minor code fixes" />
+    <MESSAGE value="Minor code fixes" />
+    <MESSAGE value="Added frontend of the application&#10;Changed some database connections" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added frontend of the application&#10;Changed some database connections" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/backend/src/main/java/audioplayer/service/impl/SongServiceImpl.java</url>
+          <line>139</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="by.lapil.audioplayer.model.entity.Song" memberName="artist" />
+      </pinned-members>
+    </pin-to-top-manager>
+    <watches-manager>
+      <configuration name="JUnit">
+        <watch expression="newArtistList.get(0).songs" />
+      </configuration>
+      <configuration name="SpringBootApplicationConfigurationType">
+        <watch expression="artists" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/audioplayer$java_in_backend.ic" NAME="java in backend Coverage Results" MODIFIED="1747133486222" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/audioplayer$ArtistServiceTest_findAllByName_ShouldReturnArtistDtos.ic" NAME="ArtistServiceTest.findAllByName_ShouldReturnArtistDtos Coverage Results" MODIFIED="1747133822694" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>audioplayer.service.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/audioplayer$ArtistServiceTest_updateList_ShouldThrowNotFoundException.ic" NAME="ArtistServiceTest.updateList_ShouldThrowNotFoundException Coverage Results" MODIFIED="1745571394404" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>by.lapil.audioplayer.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/audioplayer$LogServiceTest_getLogsByDate_shouldThrowDateTimeParseException_whenCannotReadDateFromFileCorrectly.ic" NAME="LogServiceTest.getLogsByDate_shouldThrowDateTimeParseException_whenCannotReadDateFromFileCorrectly Coverage Results" MODIFIED="1747002867926" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>by.lapil.audioplayer.service.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/audioplayer$java_in_audioplayer.ic" NAME="java in audioplayer Coverage Results" MODIFIED="1747003554356" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/audioplayer$ArtistServiceTest_findAllByName_ShouldThrowNotFoundException.ic" NAME="ArtistServiceTest.findAllByName_ShouldThrowNotFoundException Coverage Results" MODIFIED="1747133836132" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>audioplayer.service.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/audioplayer$SongServiceTest_update_ShouldReturnList.ic" NAME="SongServiceTest.update_ShouldReturnList Coverage Results" MODIFIED="1744964801585" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>by.lapil.audioplayer.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/audioplayer$LogServiceTest.ic" NAME="LogServiceTest Coverage Results" MODIFIED="1747003542824" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>by.lapil.audioplayer.service.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/audioplayer$VisitCounterServiceTest.ic" NAME="VisitCounterServiceTest Coverage Results" MODIFIED="1747003831689" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>by.lapil.audioplayer.service.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/audioplayer$SongServiceTest_patch_ShouldUpdateArtist.ic" NAME="SongServiceTest.patch_ShouldUpdateArtist Coverage Results" MODIFIED="1747123492489" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>audioplayer.service.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/audioplayer$AlbumServiceTest.ic" NAME="AlbumServiceTest Coverage Results" MODIFIED="1745579905919" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>by.lapil.audioplayer.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/audioplayer$ArtistServiceTest_findByName_ShouldReturnNotFound.ic" NAME="ArtistServiceTest.findByName_ShouldReturnNotFound Coverage Results" MODIFIED="1745567626134" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>by.lapil.audioplayer.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/audioplayer$SongServiceTest.ic" NAME="SongServiceTest Coverage Results" MODIFIED="1747123555491" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>audioplayer.service.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/audioplayer$ArtistServiceTest.ic" NAME="ArtistServiceTest Coverage Results" MODIFIED="1745571626119" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>by.lapil.audioplayer.*</FILTER>
+    </SUITE>
+  </component>
+</project>
