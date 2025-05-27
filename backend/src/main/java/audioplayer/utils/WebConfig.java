@@ -14,10 +14,10 @@ public class WebConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(@NonNull CorsRegistry registry) {
-                registry.addMapping("/api/**")  // подставь свои пути API
-                        .allowedOrigins("https://audioplayer-1.onrender.com/*", "https://audioplayer-fnqf.onrender.com/*")
-                        .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
-                        .allowCredentials(true);
+                registry.addMapping("/api/v1/**")
+                        .allowedOrigins("*")
+                        .allowedMethods("*")
+                        .allowCredentials(false);
             }
         };
     }
