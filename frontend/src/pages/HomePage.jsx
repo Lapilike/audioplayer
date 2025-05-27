@@ -21,6 +21,7 @@ export default function HomePage() {
     useEffect(() => {
         axios.get('api/v1/music')
             .then(response => {
+                console.log('Запрос отправлен на:', response.config.url);
                 setSongs(response.data);  // Присваиваем полученные данные в состояние
                 setLoading(false);         // Завершаем процесс загрузки
             })
@@ -56,6 +57,7 @@ export default function HomePage() {
         setPlaylistAdded(false);
     }, []);
 
+    console.log('songs - ', songs);
     return (
         <Box>
             <Box sx={{padding: 10 + "px"}}>
