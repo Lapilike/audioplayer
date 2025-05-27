@@ -2,19 +2,17 @@ package audioplayer.utils;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.lang.NonNull;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebConfig {
-//comment
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
-            public void addCorsMappings(@NonNull CorsRegistry registry) {
-                registry.addMapping("/api/**")
+            public void addCorsMappings( CorsRegistry registry) {
+                registry.addMapping("/api/v1/*")
                         .allowedOrigins("*")
                         .allowedMethods("*")
                         .allowCredentials(false);

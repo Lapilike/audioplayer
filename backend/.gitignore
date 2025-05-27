@@ -1,5 +1,6 @@
 HELP.md
 target/
+.idea
 /logs
 /files
 !backend/.mvn/wrapper/maven-wrapper.jar
