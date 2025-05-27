@@ -10,7 +10,6 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -29,7 +28,6 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Плейлист", description = "Управление альбомами")
 public class PlaylistController {
     private final PlaylistService playlistService;
-    @CrossOrigin(origins = {"http://localhost:3000", "http://localhost:4200"})
 
     @Operation(summary = "Получить список всех альбомов")
     @GetMapping
