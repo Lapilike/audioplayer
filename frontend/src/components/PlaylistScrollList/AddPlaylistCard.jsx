@@ -9,6 +9,7 @@ import {useState} from "react";
 import {Box} from "@mui/material";
 import {TextField} from "@mui/material";
 import SongChooseMenu from "../SongChooseMenu";
+import {AppPath} from "../../pages/HomePage";
 
 function AddPlaylistCard({onPlaylistAdded }) {
     const [isAdding, setIsAdding] = useState(false);
@@ -18,7 +19,7 @@ function AddPlaylistCard({onPlaylistAdded }) {
     const handleSubmit = async () => {
         if (!playlistName.trim()) return;
         try {
-            const response = axios.post('/api/v1/playlist', {
+            const response = axios.post(`${AppPath}api/v1/playlist`, {
                 name: playlistName,
                 songs: songIds,
             });

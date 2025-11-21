@@ -11,8 +11,8 @@ import {SkipPrevious} from "@mui/icons-material";
 
 const BASE_MUSIC_URL = "http://localhost:8080/api/v1/music/file/";
 
-function getMusicUrl(filename) {
-    return `${BASE_MUSIC_URL}${encodeURIComponent(filename)}`;
+function getMusicUrl(id) {
+    return `${BASE_MUSIC_URL}${id}`;
 }
 
 export default function AudioPlayer({currentSongs, startIndex}) {
@@ -23,6 +23,7 @@ export default function AudioPlayer({currentSongs, startIndex}) {
     const [progress, setProgress] = useState(0);
     const [duration, setDuration] = useState(0);
     const [currentIndex, setCurrentIndex] = useState(startIndex);
+    const [src, setSrc] = useState(null); // <-- источник для <audio>
 
     const togglePlay = () => {
         if (!audioRef.current) return;
@@ -114,6 +115,70 @@ export default function AudioPlayer({currentSongs, startIndex}) {
     }, [currentSongs]);
 
     useEffect(() => {
+        let cancelled = false;
+        async function resolveSource() {
+            if (!currentSong) {
+                setSrc(null);
+                return;
+            }
+
+            // определяем идентификатор для запроса: используем id, filePath или urls
+            const idOrUrl = getMusicUrl(currentSong.id);
+
+            if (!idOrUrl) {
+                // fallback: если есть поле filePath, используем его как локальный путь
+                if (currentSong.filePath) {
+                    const fileUrl = `file://${currentSong.filePath.replace(/\\/g, '/')}`;
+                    setSrc(fileUrl);
+                    return;
+                }
+                setSrc(null);
+                return;
+            }
+
+            try {
+                // вызываем main через preload
+                const res = await window.electronAPI.getTrackForPlayback(idOrUrl);
+                if (cancelled) return;
+
+                if (res && res.local && res.filepath) {
+                    // локальный файл есть — воспроизводим его
+                    const fileUrl = `file://${res.filepath.replace(/\\/g, '/')}`;
+                    setSrc(fileUrl);
+                } else if (res && res.metadata && res.metadata.url) {
+                    // нет локального файла, но есть URL в metadata — стримим URL
+                    setSrc(res.metadata.url);
+                    // опционально: запустить фоновое сохранение (не ждём)
+                    window.electronAPI.saveTrackFromUrl(res.metadata.url, res.metadata).catch(e => {
+                        console.warn('Background save failed', e);
+                    });
+                } else {
+                    // нет записи — если currentSong содержит прямой URL, используем его
+                    const possibleUrl = getMusicUrl(currentSong.id);
+                    if (possibleUrl && typeof possibleUrl === 'string') {
+                        setSrc(possibleUrl);
+                        // и опционально сохранить
+                        window.electronAPI.saveTrackFromUrl(possibleUrl, { title: currentSong.title }).catch(() => {});
+                    } else {
+                        setSrc(null);
+                    }
+                }
+            } catch (err) {
+                console.error('Error resolving track source', err);
+                // fallback: если есть filePath — пробуем его
+                if (currentSong.filePath) {
+                    setSrc(`file://${currentSong.filePath.replace(/\\/g, '/')}`);
+                } else {
+                    setSrc(null);
+                }
+            }
+        }
+
+        resolveSource();
+        return () => { cancelled = true; };
+    }, [currentSong]);
+
+    useEffect(() => {
         const audio = audioRef.current;
         if (!audio) return;
 
@@ -131,17 +196,18 @@ export default function AudioPlayer({currentSongs, startIndex}) {
             audio.removeEventListener("timeupdate", handleTimeUpdate);
             audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
         };
-    }, [duration, handleLoadedMetadata, handleTimeUpdate]);
+    }, [next, duration, handleLoadedMetadata, handleTimeUpdate]);
 
     useEffect(() => {
         if (currentSong && audioRef.current) {
+            // если src изменился, audio.load() будет вызван автоматически при изменении src prop
             audioRef.current.load();
             audioRef.current.play().catch(e => {
                 console.log("Autoplay prevented or error:", e);
             });
             setIsPlaying(true);
         }
-    }, [currentSong]);
+    }, [currentSong, src]);
 
     if (!currentSong || !currentSong.filePath || !currentSong.title) return null;
 
@@ -196,7 +262,7 @@ export default function AudioPlayer({currentSongs, startIndex}) {
                             color: "primary.main" }} // или любой нужный размер
                     />
                 </Box>
-                <audio  ref={audioRef} src={getMusicUrl(currentSong.filePath)}
+                <audio  ref={audioRef} src={src}
                         preload="metadata"/>
             </Box>
             <Stack

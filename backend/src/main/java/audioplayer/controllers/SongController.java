@@ -37,10 +37,10 @@ public class SongController {
     SongService songService;
     private final Path rootLocation = Paths.get("backend/files");
 
-    @GetMapping("/file/{filename:.+}")
-    public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
+    @GetMapping("/file/{id}")
+    public ResponseEntity<Resource> serveFile(@PathVariable Long id) {
         try {
-            Path file = rootLocation.resolve(filename).normalize();
+            Path file = Path.of(songService.findById(id).getFilePath());
             Resource resource = new UrlResource(file.toUri());
 
             if (!resource.exists() || !resource.isReadable()) {

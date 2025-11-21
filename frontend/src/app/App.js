@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import HomePage from "../pages/HomePage";
 import AdminPage from "../pages/AdminPage";
 import Layout from "../layout/Layout";
 import PlaylistPage from "../pages/PlaylistPage";
+import SongPage from "../pages/SongPage";
 
 function App() {
     useEffect(() => {
@@ -13,16 +14,14 @@ function App() {
   return (
       <>
       <div>
-
-          <Router>
               <Routes>
                   <Route path="/" element={<Layout />}>
                       <Route index element={<HomePage />} />
                       <Route path="playlist" element={<PlaylistPage />}/>
                       <Route path="admin" element={<AdminPage />} />
+                      <Route path="mysongs" element={<SongPage />} />
                   </Route>
               </Routes>
-          </Router>
 
       </div>
       </>

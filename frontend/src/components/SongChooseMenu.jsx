@@ -6,6 +6,7 @@ import {useState} from "react";
 import SongList from "./SongList/SongList";
 import {ClickAwayListener} from "@mui/material";
 import {Button} from "@mui/material";
+import {AppPath} from "../pages/HomePage";
 
 function SongChooseMenu(
     {
@@ -19,7 +20,7 @@ function SongChooseMenu(
     const [songs, setSongs] = useState([]);
 
     useEffect(() => {
-        axios.get('api/v1/music')
+        axios.get(`${AppPath}api/v1/music`)
             .then(response => {
                 setSongs(response.data);       // Завершаем процесс загрузки
             })

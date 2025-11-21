@@ -194,7 +194,7 @@ public class SongServiceImpl implements SongService {
 
     @Override
     public void parseAll() {
-        File resourceDir = new File(songsProperties.getDir());
+        File resourceDir = new File("../" + songsProperties.getDir());
 
         if (!resourceDir.exists() || !resourceDir.isDirectory()) {
             throw new NotFoundException("Resource directory not found");

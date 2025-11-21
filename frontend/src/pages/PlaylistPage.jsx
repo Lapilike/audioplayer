@@ -11,6 +11,8 @@ import {Typography} from "@mui/material";
 import SongChooseMenu from "../components/SongChooseMenu";
 import SongListAddItem from "../components/SongList/SongListAddItem";
 import {CircularProgress} from "@mui/material";
+import {AppPath} from "./HomePage";
+import {useCallback} from "react";
 
 export default function PlaylistPage() {
     const {currentSongs} = useContext(AudioContext);
@@ -26,33 +28,16 @@ export default function PlaylistPage() {
     const [retryCount, setRetryCount] = useState(0);
     const MAX_RETRIES = 5;
     const playlistId = state?.playlistId;
-
-    useEffect(() => {
-        updatePlaylist();
-    }, []);
-
-    useEffect(() => {
-        if (loading && retryCount >= MAX_RETRIES) {
-            setError("Loading error occured");
-            return;
-        }
-
-        const retryTimeout = setTimeout(() => {
-            console.log("Повтор запроса...", retryCount + 1);
-            setRetryCount(prev => prev + 1);
-            updatePlaylist();
-        }, 3000);
-        clearTimeout(retryTimeout);
-    }, [loading, retryCount]);
-
-    const updatePlaylist = () => {
-        axios.get(`api/v1/playlist/${playlistId}`)
+    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const updatePlaylist = useCallback(() => {
+        axios.get(`${AppPath}api/v1/playlist/${playlistId}`)
             .then(response => {
                 const data = response.data;
                 setPlaylist(data);
                 setSongIds(data.songIds);
                 console.log('loading ended - ', playlist);
-                return axios.get('/api/v1/music/all', {
+                return axios.get(`${AppPath}api/v1/music/all`, {
                     params: { ids: data.songIds },
                     paramsSerializer: {indexes: null}
                 });
@@ -65,12 +50,30 @@ export default function PlaylistPage() {
                 console.log('error', err.toString());
                 setLoading(true);
             });
-    }
+    })
+    
+    useEffect(() => {
+        if (loading && retryCount >= MAX_RETRIES) {
+            setError("Loading error occured");
+            return;
+        }
+
+        const retryTimeout = setTimeout(() => {
+            console.log("Повтор запроса...", retryCount + 1);
+            setRetryCount(prev => prev + 1);
+            updatePlaylist();
+        }, 3000);
+        clearTimeout(retryTimeout);
+    }, [loading, retryCount, setError, updatePlaylist]);
+
+    useEffect(() => {
+        updatePlaylist();
+    }, );
 
     const handleConfirm = async () => {
         try {
             console.log('new songs - ', songIds);
-            const response = await axios.patch(`/api/v1/playlist/${playlist.id}`, {
+            const response = await axios.patch(`${AppPath}api/v1/playlist/${playlist.id}`, {
                 songs: songIds
             });
             updatePlaylist();

@@ -8,6 +8,7 @@ import {useContext} from "react";
 import { AudioContext } from "../layout/Layout";
 import PlaylistScrollMenu from "../components/PlaylistScrollList/PlaylistScrollList";
 
+export const AppPath = 'http://localhost:8080/'
 
 export default function HomePage() {
     const {setCurrentSong} = useContext(AudioContext);
@@ -15,11 +16,11 @@ export default function HomePage() {
     const [songs, setSongs] = useState([]);
     const [playlists, setPlaylists] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [playlistAdded, setPlaylistAdded] = useState(true);
+    const [setPlaylistAdded] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        axios.get('https://audioplayer-backend.onrender.com/api/v1/music', {
+        axios.get(`${AppPath}api/v1/music`, {
             withCredentials: true
         })
             .then(response => {
@@ -34,7 +35,7 @@ export default function HomePage() {
     }, []);
 
     const loadPlaylist = async () => {
-        axios.get('https://audioplayer-backend.onrender.com/api/v1/playlist', {
+        axios.get(`${AppPath}api/v1/playlist`, {
             withCredentials: true
         })
             .then(response => {
@@ -49,7 +50,7 @@ export default function HomePage() {
     };
 
     const handleDelete = (playlist) => {
-        axios.delete(`api/v1/playlist/${playlist.id}`)
+        axios.delete(`${AppPath}api/v1/playlist/${playlist.id}`)
             .catch(error => {
                 console.log('Delete error', error)
             });
@@ -60,7 +61,7 @@ export default function HomePage() {
         loadPlaylist().catch(console.error);
         console.log("loaded playlists - ", playlists);
         setPlaylistAdded(false);
-    }, []);
+    }, );
 
     console.log('songs - ', songs);
     return (

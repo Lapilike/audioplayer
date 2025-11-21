@@ -9,7 +9,7 @@ export default function AdminPage() {
 
     const handleClick = async () => {
         try {
-            await axios.get('/api/v1/music/parse');
+            await axios.get('http://localhost:8080/api/v1/music/parse');
         } catch (err) {
             console.error(err);
         }

@@ -2,7 +2,7 @@ HELP.md
 target/
 .idea
 /logs
-/files
+/songs
 !backend/.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
@@ -17,7 +17,6 @@ target/
 .sts4-cache
 
 ### IntelliJ IDEA ###
-.idea
 *.iws
 *.iml
 *.ipr

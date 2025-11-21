@@ -17,6 +17,7 @@ public class CorsFilter implements Filter {
     private final List<String> allowedOrigins = List.of(
             "https://audioplayer-ba3z.onrender.com",
             "http://localhost:3000",
+            "http://localhost:8080",
             "http://localhost:4200"
     );
 
@@ -30,7 +31,7 @@ public class CorsFilter implements Filter {
         if (origin != null && allowedOrigins.contains(origin)) {
             response.setHeader("Access-Control-Allow-Origin", origin);
             response.setHeader("Access-Control-Allow-Credentials", "true");
-            response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+            response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE, OPTIONS");
             response.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
         }
 
